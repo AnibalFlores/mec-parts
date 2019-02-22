@@ -1,0 +1,31 @@
+<div>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <pagination-controls previousLabel="atras"
+                      nextLabel="siguiente" (pageChange)="p = $event"></pagination-controls>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Estado</th>
+        <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-terminal/']"
+            routerLinkActive="router-link-active">Nuevo</button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ter of terminales | paginate: { itemsPerPage: 10, currentPage: p }">
+        <th scope="row">{{ter.id}}</th>
+        <td>{{ter.nombre}}</td>
+        <td>{{ter.estado}}</td>
+        <td>
+          <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-terminal/'+ ter.id]"
+            routerLinkActive="router-link-active">Editar</button>
+          <button *ngIf="!vendedor" class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-terminal/'+ ter.id]"
+            routerLinkActive="router-link-active">Borrar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

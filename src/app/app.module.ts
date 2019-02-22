@@ -24,6 +24,9 @@ import { BorrarOperarioComponent } from './components/borrar-operario/borrar-ope
 import { ListaMaquinasComponent } from './components/lista-maquinas/lista-maquinas.component';
 import { BorrarMaquinasComponent } from './components/borrar-maquinas/borrar-maquinas.component';
 import { EditarMaquinasComponent } from './components/editar-maquinas/editar-maquinas.component';
+import { ListaTerminalesComponent } from './components/lista-terminales/lista-terminales.component';
+import { EditarTerminalComponent } from './components/editar-terminal/editar-terminal.component';
+import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-terminal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { EditarMaquinasComponent } from './components/editar-maquinas/editar-maq
     BorrarOperarioComponent,
     ListaMaquinasComponent,
     BorrarMaquinasComponent,
-    EditarMaquinasComponent
+    EditarMaquinasComponent,
+    ListaTerminalesComponent,
+    EditarTerminalComponent,
+    BorrarTerminalComponent
   ],
   imports: [
     BrowserModule,

@@ -5,32 +5,44 @@ const Terminal = db.terminal;
 exports.init = (req, res) => {
 	Terminal.create({
 		nombre: 'Terminal de Pruebas',
-		estado: 'Apagado',
-		estacionId: 1
+		estado: 'Apagado'		
 	});
 
 	Terminal.create({
 		nombre: 'Terminal de Pintura',
-		estado: 'Apagado',
-		estacionId: 2
+		estado: 'Apagado'		
 	});
 
-// return res.send('Rubros Ok');
+	Terminal.create({
+		nombre: 'Terminal de Torneado',
+		estado: 'Apagado'		
+	});
+
+// return res.send('Terminales Ok');
 }
 
 // Listar todos los terminales
 exports.findAll = (req, res) => {
 	Terminal.findAll({
-		attributes: ['id', 'nombre'],
-	}).then(rubros => {
-		res.json(rubros);
+		attributes: ['id', 'nombre', 'estado'],
+	}).then(terminales => {
+		res.json(terminales);
 	});
 }
+
+// Listar todos los terminales ordenadas por update
+exports.findAllStock = (req, res) => {
+	Terminal.findAll({
+	  attributes: ['id', 'nombre', 'estado']
+	}).then(terminales => {
+	  res.json(terminales);
+	});
+  };
 
 // Buscar por id
 exports.findById = (req, res) => {
 	Terminal.findByPk(req.params.id, {
-		attributes: ['id', 'nombre']
+		attributes: ['id', 'nombre', 'estado']
 	}).then(rub => res.json(rub))
 };
 
@@ -53,10 +65,11 @@ exports.destroy = (req, res) => {
 // Terminal nuevo
 exports.create = (req, res) => {
 	Terminal.create({
-		nombre: req.body.nombre
-	}).then(rub => {
-		res.send(rub)
-		console.log(rub.get())
+		nombre: req.body.nombre,
+		estado: req.body.estado
+	}).then(ter => {
+		res.send(ter)
+		console.log(ter.get())
 	})
 
 }
@@ -64,7 +77,8 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
 	Terminal.update({
-			nombre: req.body.nombre
+		nombre: req.body.nombre,
+		estado: req.body.estado
 		}, {
 			where: {
 				id: req.params.id

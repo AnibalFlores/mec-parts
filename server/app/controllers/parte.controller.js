@@ -562,6 +562,16 @@ exports.findAll = (req, res) => {
   });
 };
 
+// Listar todos las partes ordenadas por codigo
+exports.findAllCodes = (req, res) => {
+  Parte.findAll({
+    attributes: ['id', 'codigo'],
+    order: [['codigo','ASC']]
+  }).then(partes => {
+    res.json(partes);
+  });
+};
+
 // Listar todos las partes ordenadas por update
 exports.findAllStock = (req, res) => {
   Parte.findAll({

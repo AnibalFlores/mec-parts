@@ -1,5 +1,6 @@
 var express = require('express');
-var app = express();
+ var app = express(); // express tradicional http
+// const app = require("https-localhost") // modulo wrap de express que redirecciona a puerto 443 con certificados mkcert
 
 // var bodyParser = require('body-parser'); // <-- body parser deprecado ahora incluido en express
 // app.use(bodyParser.json())
@@ -13,8 +14,10 @@ app.use(function (req, res, next) {
   // modifico los headers para definir las siguientes cositas
   // Websites a los que permitir conexion (* cualquiera peligroso)
   res.setHeader('Access-Control-Allow-Origin', '*');
-  // accioness que permitiremos
+  // acciones que permitiremos
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  // si estamos logueados
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   // Headers que quiero permitir
   res.setHeader('Access-Control-Allow-Headers', 'x-auth, Content-Type');
   // Se pone a true si por ejemplo queremos cookies en las requests a
@@ -36,6 +39,8 @@ const partes = require('./app/controllers/parte.controller');
 const operarios = require('./app/controllers/operario.controller');
 const maquinas = require('./app/controllers/maquina.controller');
 const operaciones = require('./app/controllers/operacion.controller');
+const labores = require('./app/controllers/labor.controller');
+const eventos = require('./app/controllers/evento.controller');
 
 // el "force: true" borra todas las tablas y las crea de nuevo en cada ejecucion
 // aparte hay triggers en crudo los puse separados en @storedprocedures.js
@@ -56,6 +61,8 @@ db.sequelize.sync({
   operarios.init();
   maquinas.init();
   operaciones.init();
+  labores.init();
+  eventos.init();
   
   console.log('**** Datos iniciales generados con exito ****');
 });

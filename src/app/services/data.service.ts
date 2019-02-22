@@ -14,7 +14,7 @@ import { Telefono } from '../classes/telefono';
 import { Cliente } from '../classes/cliente';*/
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://localhost:3000';
 
 @Injectable({
   providedIn: 'root'

@@ -1,21 +1,24 @@
 module.exports = function (app) {
     const parte = require('../controllers/parte.controller');
 
-    // Iniciar datos: add rubros del sistema
+    // Iniciar datos: add partes del sistema
     app.get('/api/partes/iniciar', parte.init);
 
-    // Trae todos los rubros
+    // Trae todos las partes
     app.get('/api/partes/', parte.findAll);
 
-    // busca un rubro por su id
+    // Trae todos los codigos
+    app.get('/api/codigosdepartes/', parte.findAllCodes);
+
+    // busca una parte por su id
     app.get('/api/parte/:id', parte.findById);
 
-    // Borra un rubro por su id
+    // Borra una parte por su id
     app.delete('/api/parteborrar/:id', parte.destroy);
 
-    // Inserta un articulo nuevo
+    // Inserta un parte nueva
     app.post('/api/partenueva/', parte.create);
 
-    // Actualiza un articulo por su id
+    // Actualiza una parte por su id
     app.put('/api/parteupdate/:id', parte.update);
 }

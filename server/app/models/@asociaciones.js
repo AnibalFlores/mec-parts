@@ -10,6 +10,9 @@ module.exports = (db, sequelize, Sequelize) => {
   db.usuario = require('../models/usuario.model')(sequelize, Sequelize);
   db.maquina = require('../models/maquina.model')(sequelize, Sequelize);
   db.operacion = require('../models/operacion.model')(sequelize, Sequelize);
+  db.labor = require('../models/labor.model')(sequelize, Sequelize);
+  db.evento = require('../models/evento.model')(sequelize, Sequelize);
+  db.reciente = require('../models/reciente.model')(sequelize, Sequelize);
 
   // Aca definimos lo importante y complicado las asociaciones en la DB
 
@@ -19,6 +22,30 @@ module.exports = (db, sequelize, Sequelize) => {
   });
   db.terminal.belongsTo(db.estacion, {
     as: 'estacion'
+  });
+
+  // Una terminal tiene registro de varias maquinas en tabla maquinas tendremos una fk terminalId
+  db.terminal.hasMany(db.maquina, {
+    as: 'maquinas'
+  });
+  db.maquina.belongsTo(db.terminal, {
+    as: 'terminal'
+  });
+
+  // Una operario tiene registro de varias labores en tabla labores tendremos una fk operadorId
+  db.operario.hasMany(db.labor, {
+    as: 'labores'
+  });
+  db.labor.belongsTo(db.operario, {
+    as: 'operario'
+  });
+
+  // Una labor tiene registro de varios eventos en tabla eventos tendremos una fk laborId
+  db.labor.hasMany(db.evento, {
+    as: 'eventos'
+  });
+  db.evento.belongsTo(db.labor, {
+    as: 'labor'
   });
 
   // Ejemplo asociaciones n:m (no es necesario pero lo hice para practicar sequelize)

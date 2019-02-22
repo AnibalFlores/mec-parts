@@ -6,4 +6,8 @@ module.exports = function (app) {
   require('./operario.route')(app);
   require('./maquina.route')(app);
   require('./operacion.route')(app);
+  require('./labor.route')(app);
+  require('./evento.route')(app);
+  require('./terminal.route')(app);
+  require('./reciente.route')(app);
 }

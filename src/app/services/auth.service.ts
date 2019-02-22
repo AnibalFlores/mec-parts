@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Usuario } from '../classes/usuario';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+const baseUrl = 'https://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class AuthService {
   // Observable devuelve usuario válido (no olvidar hacer la suscripcion desde la login page)
   login(usuario: String, clave: String) {
     const body = { usuario: usuario, clave: clave };
-    return this.client.post('http://localhost:3000/api/login', body, httpOptions);
+    return this.client.post(baseUrl + '/api/login', body, httpOptions);
   }
 
   // re facil creamos un nuevo usuario (rol N) y lo mandamos a nuevologueado
