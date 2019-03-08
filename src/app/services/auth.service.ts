@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Usuario } from '../classes/usuario';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-const baseUrl = 'https://localhost:3000';
+const baseUrl = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'

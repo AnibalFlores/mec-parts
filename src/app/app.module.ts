@@ -1,6 +1,6 @@
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { UiSwitchModule } from 'ngx-toggle-switch';
@@ -27,6 +27,9 @@ import { EditarMaquinasComponent } from './components/editar-maquinas/editar-maq
 import { ListaTerminalesComponent } from './components/lista-terminales/lista-terminales.component';
 import { EditarTerminalComponent } from './components/editar-terminal/editar-terminal.component';
 import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-terminal.component';
+import { VincularMaquinasComponent } from './components/vincular-maquinas/vincular-maquinas.component';
+import { VincularPartesComponent } from './components/vincular-partes/vincular-partes.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -49,11 +52,15 @@ import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-ter
     EditarMaquinasComponent,
     ListaTerminalesComponent,
     EditarTerminalComponent,
-    BorrarTerminalComponent
+    BorrarTerminalComponent,
+    VincularMaquinasComponent,
+    VincularPartesComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    DragDropModule,
     NgxPaginationModule,
     UiSwitchModule,
     AccordionModule.forRoot(),

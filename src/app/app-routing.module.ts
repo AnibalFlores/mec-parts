@@ -17,6 +17,7 @@ import { BorrarOperacionComponent } from './components/borrar-operacion/borrar-o
 import { ListaTerminalesComponent } from './components/lista-terminales/lista-terminales.component';
 import { EditarTerminalComponent } from './components/editar-terminal/editar-terminal.component';
 import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-terminal.component';
+import { VincularMaquinasComponent } from './components/vincular-maquinas/vincular-maquinas.component';
 
 const routes: Routes = [
   // Ingreso
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'editar-terminal/:id', component: EditarTerminalComponent },
   { path: 'borrar-terminal/:id', component: BorrarTerminalComponent },
   { path: 'nuevo-terminal', component: EditarTerminalComponent },
+  { path: 'asociar-terminal-maquina', component: VincularMaquinasComponent },
   // Default
   { path: '**', redirectTo: '/login' }
 ];

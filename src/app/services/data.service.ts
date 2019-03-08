@@ -6,6 +6,7 @@ import { Parte } from '../classes/parte';
 import { Operario } from '../classes/operario';
 import { Maquina } from '../classes/maquina';
 import { Operacion } from '../classes/operacion';
+import { Terminal } from '../classes/terminal';
 
 /*import { Articulo } from '../classes/articulo';
 import { Rubro } from '../classes/rubro';
@@ -14,7 +15,7 @@ import { Telefono } from '../classes/telefono';
 import { Cliente } from '../classes/cliente';*/
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-const baseUrl = 'https://localhost:3000';
+const baseUrl = 'http://localhost:3000';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,27 @@ export class DataService {
   // Verbos para Terminales
   getTerminales() {
     return this.httpCli.get(baseUrl + '/api/terminales', httpOptions);
+  }
+
+  getTerminal(id: number): Observable<any> {
+    return this.httpCli.get(baseUrl + '/api/terminal/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  putTerminal(term: Terminal) {
+    return this.httpCli.put<Terminal>(baseUrl + '/api/terminalupdate/' + term.id, JSON.stringify(term), httpOptions);
+  }
+
+  newTerminal(term: Terminal) {
+    return this.httpCli.post<Terminal>(baseUrl + '/api/terminalnuevo/', JSON.stringify(term), httpOptions);
+  }
+
+  delTerminal(id: number) {
+    return this.httpCli.delete(baseUrl + '/api/terminalborrar/' + id, httpOptions);
+  }
+
+  newTerminalMaquinas(termid: number) {
+    return this.httpCli.post<Terminal>(baseUrl + '/api/terminalnuevo/', JSON.stringify(termid), httpOptions);
   }
 
   // Verbos para Estaciones

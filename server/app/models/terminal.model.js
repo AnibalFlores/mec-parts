@@ -6,6 +6,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         estado: {
             type: Sequelize.STRING,
+            defaultValue: 'Apagado',
             validate: {
                 isIn: [['Apagado','En Espera', 'PAP', 'Mecanizando']],
             }

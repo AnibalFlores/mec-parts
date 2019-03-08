@@ -48,81 +48,25 @@ module.exports = (db, sequelize, Sequelize) => {
     as: 'labor'
   });
 
-  // Ejemplo asociaciones n:m (no es necesario pero lo hice para practicar sequelize)
-  // la ventaja es que todos los telefonos esta en un misma tabla y hay 
-  // una tabla join proveedores_telefonos para guardar multiples telefonos por proveedor
-  /* db.proveedor.belongsToMany(db.telefono, {
-      as: 'telefonos',
-      through: 'proveedores_telefonos',
+  // Aca hacemos asociaciones n:m entre los terminales y las partes
+  // la ventaja es que todos los terminales recibiran un listado de codigos reducido 
+  // por medio de una tabla join terminales_partes para guardar multiples codigos de partes por terminal
+  // y tener una busqueda incremental más optima
+
+  db.terminal.belongsToMany(db.parte, {
+      as: 'partes',
+      through: 'terminales_partes',
       timestamps: false,
       foreignKey: 'id',
-      otherKey: 'telefonoId'
+      otherKey: 'parteId'
   });
-  db.telefono.belongsToMany(db.proveedor, {
-      as: 'proveedores',
-      through: 'proveedores_telefonos',
+  db.parte.belongsToMany(db.terminal, {
+      as: 'terminales',
+      through: 'terminales_partes',
       timestamps: false,
-      foreignKey: 'telefonoId',
+      foreignKey: 'parteId',
       otherKey: 'id'
   });
-
-  // y una tabla clientes_telefonos para guardar multiples telefonos por cliente
-  db.cliente.belongsToMany(db.telefono, {
-      as: 'telefonos',
-      through: 'clientes_telefonos',
-      timestamps: false,
-      foreignKey: 'id',
-      otherKey: 'telefonoId'
-  });
-  db.telefono.belongsToMany(db.cliente, {
-      as: 'clientes',
-      through: 'clientes_telefonos',
-      timestamps: false,
-      foreignKey: 'telefonoId',
-      otherKey: 'id'
-  });
-
-  // TODO: lo mismo seria con por ejemplo domicilios varias entidades comparten la tabla domicilios
-  // via tablas join auxiliares de nombre: entidad_domicilio 
-  // no hice domicilios pero seria igual a lo anterior
-
-  // Ejemplo más sencillo 1:N 
-  // Un rubro tiene registro de varios articulos en tabla articulos tendremos una fk rubroId
-  db.rubro.hasMany(db.articulo, {
-      as: 'articulos'
-  });
-  db.articulo.belongsTo(db.rubro, {
-      as: 'rubro'
-  });
-
-  // Ahora vamos por las consignas de facturación
-  // una factura de compra tiene varios items de compra 
-  db.facturacompra.hasMany(db.itemcompra, {
-      as: 'items',
-      onDelete: 'cascade'
-  });
-  // una factura de venta tiene varios items de venta
-  db.facturaventa.hasMany(db.itemventa, {
-      as: 'items',
-      onDelete: 'cascade'
-  });
-
-  // Si se borra (solo puede el admin) el cliente o proveedor se eliminan
-  // todos los comprobantes de facturas asociados 
-  // (en un sistema real no debe ser posible borrar documentos contables
-  // pero por simplicidad aplicamos el cascade)
-
-  // un proveedor tiene varias facturas de compra
-  db.proveedor.hasMany(db.facturacompra, {
-      as: 'facturas',
-      onDelete: 'cascade'
-  })
-
-  // un cliente tiene varias facturas de venta
-  db.cliente.hasMany(db.facturaventa, {
-      as: 'facturas',
-      onDelete: 'cascade'
-  }) */
 
   return db; // devolvemos la db con las asociaciones aplicadas
 }

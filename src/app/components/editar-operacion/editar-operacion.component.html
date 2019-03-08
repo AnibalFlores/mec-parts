@@ -4,11 +4,12 @@
   </div>
   <div *ngIf="operacion">
     <form class="center" #operacionForm="ngForm">
-      
+
       <div class="form-row">
         <div class="form-group col-md-2">
           <label for="inputCodigo">Nombre</label>
-          <input type="text" class="form-control" name="nombre" required min="2" [(ngModel)]="operacion.nombre" placeholder="Nombre...">
+          <input type="text" class="form-control" name="nombre" required min="2" [(ngModel)]="operacion.nombre"
+            placeholder="Nombre...">
         </div>
       </div>
 

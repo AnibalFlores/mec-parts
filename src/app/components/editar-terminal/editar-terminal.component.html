@@ -1,3 +1,23 @@
-<p>
-  editar-terminal works!
-</p>
+<div>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="terminal">
+    <form class="center" #terminalForm="ngForm">
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputCodigo">Nombre</label>
+          <input type="text" class="form-control" name="nombre" required min="2" [(ngModel)]="terminal.nombre"
+            placeholder="Nombre...">
+        </div>
+      </div>
+
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!terminalForm.form.valid">Aceptar</button>
+        <button type="button" class="btn btn-primary" routerLink="/lista-terminales">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

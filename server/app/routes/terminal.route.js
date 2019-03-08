@@ -20,7 +20,7 @@ module.exports = function(app) {
     app.delete('/api/terminalborrar/:id', terminales.destroy);
 
     // Inserta una terminal nueva
-    app.post('/api/terminalnueva/', terminales.create);
+    app.post('/api/terminalnuevo/', terminales.create);
 
     // Actualiza una terminal por su id
     app.put('/api/terminalupdate/:id', terminales.update);

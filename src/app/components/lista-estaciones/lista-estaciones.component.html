@@ -3,10 +3,10 @@
     <h5>{{ titulo }}</h5>
   </div>
   <accordion>
-  <accordion-group *ngFor="let est of estaciones" [heading]="est.nombre" [isOpen]="isFirstOpen">
-    <p *ngFor="let term of est.terminales"># {{ term.id }} Nombre: {{ term.nombre }} Estado: {{ term.estado }} </p>
-  </accordion-group>
-</accordion>
+    <accordion-group *ngFor="let est of estaciones" [heading]="est.nombre" [isOpen]="isFirstOpen">
+      <p *ngFor="let term of est.terminales"># {{ term.id }} Nombre: {{ term.nombre }} Estado: {{ term.estado }} </p>
+    </accordion-group>
+  </accordion>
 
   <table class="table table-striped">
     <thead class="thead-dark">
