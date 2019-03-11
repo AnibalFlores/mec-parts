@@ -565,6 +565,7 @@ exports.findAll = (req, res) => {
 // Listar todos las partes ordenadas por codigo
 exports.findAllCodes = (req, res) => {
   Parte.findAll({
+    limit: 25, // esto es para testing en produccion seria filtrado por terminal y app nativa 
     attributes: ['id', 'codigo'],
     order: [['codigo','ASC']]
   }).then(partes => {
