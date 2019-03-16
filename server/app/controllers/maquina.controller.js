@@ -1,29 +1,15 @@
+const { Maquinas } = require("./maquinas");
 const db = require('../configs/db.config');
 const Op = db.Sequelize.Op;
 const Maquina = db.maquina;
 
 // Iniciar datos: Maquina (1 - Testing)
 exports.init = (req, res) => {
-  Maquina.create({
-    nombre: 'Maquina de Pruebas'
-  });
+  Maquina.bulkCreate(Maquinas).then(() => {
+    return Maquina.findAll();
+  }).then(maq =>
+    console.log('Maquinas creadas'));
 
-  Maquina.create({
-    nombre: 'Pintura'
-  });
-
-  Maquina.create({
-    nombre: 'Torno'
-  });
-
-  Maquina.create({
-    nombre: 'Fresa'
-  });
-
-  Maquina.create({
-    nombre: 'Taladro'
-  });
-  // return res.send('Maquinas Ok');
 
 }
 

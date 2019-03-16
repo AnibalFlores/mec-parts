@@ -1,13 +1,13 @@
 'use strict'
 module.exports = (sequelize, Sequelize) => {
-  const Maquina = sequelize.define('maquina', {
+  const Listado = sequelize.define('listado', {
     nombre: {
       type: Sequelize.STRING
     }
   }, {
-    tableName: 'maquinas',
+    tableName: 'listados',
     timestamps: false,
   });
 
-  return Maquina;
+  return Listado;
 }

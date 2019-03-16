@@ -5,25 +5,18 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allownull: false
     },
-    nombre: {
-      type: Sequelize.STRING
-    },
-    descripcion: {
-      type: Sequelize.STRING
-    },
     activa: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
     }
   }, {
     indexes: [
-      // Creamos a indice unico para el codigo mecpart
+      // Creamos un indice unico para el codigo mecpart + el listado
       {
         unique: true,
-        fields: ['codigo']
+        fields: ['codigo', 'listadoId']
       }
-    ]
-  }, {
+    ],
     tableName: 'partes',
     timestamps: false,
   });

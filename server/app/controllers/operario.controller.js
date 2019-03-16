@@ -1,31 +1,16 @@
+const { Operarios } = require("./Operarios");
 const db = require('../configs/db.config');
 const Operario = db.operario;
 const Op = db.Sequelize.Op;
 
-// Iniciar datos: Operarios & pines
+// Iniciar datos: Operarios
 exports.init = (req, res) => {
-  Operario.create({
-    nombre: 'Andrea',
-    apellido: 'Perez',
-  });
 
-  Operario.create({
-    nombre: 'Daniel',
-    apellido: 'Suarez',
-  });
-
-  Operario.create({
-    nombre: 'Marcos',
-    apellido: 'Guerra',
-  });
-
-  Operario.create({
-    nombre: 'Luisa',
-    apellido: 'Frias',
-  });
-
-  // return res.send('Operarios Ok');
-
+  Operario.bulkCreate(Operarios).then(() => {
+    return Operario.findAll();
+  }).then(operarios => {
+    console.log('Operarios creados')
+  })
 };
 
 // Listar todos los Operarios ordenados por apellido y nombre

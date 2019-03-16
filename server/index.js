@@ -35,6 +35,7 @@ const db = require('./app/configs/db.config');
 const usuarios = require('./app/controllers/usuario.controller');
 const estaciones = require('./app/controllers/estacion.controller');
 const terminales = require('./app/controllers/terminal.controller');
+const listados = require('./app/controllers/listado.controller');
 const partes = require('./app/controllers/parte.controller');
 const operarios = require('./app/controllers/operario.controller');
 const maquinas = require('./app/controllers/maquina.controller');
@@ -55,14 +56,15 @@ db.sequelize.sync({
   // aca lleno las tablas de las entidades básicas el orden es importante
   // sin facturas y algunos articulos informáticos todos en cero unidades 
   usuarios.init();
+  // listados.init();
   estaciones.init();
   terminales.init();
-  partes.init();
   operarios.init();
   maquinas.init();
   operaciones.init();
   labores.init();
   eventos.init();
+  partes.init();
   
   console.log('**** Datos iniciales generados con exito ****');
 });

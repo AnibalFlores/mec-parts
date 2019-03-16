@@ -4,6 +4,7 @@ module.exports = (db, sequelize, Sequelize) => {
   // importo las entidades a asociar una por una (esto tambien crea las tablas vacias)
 
   db.estacion = require('../models/estacion.model')(sequelize, Sequelize);
+  db.listado = require('../models/listado.model')(sequelize, Sequelize);
   db.parte = require('../models/parte.model')(sequelize, Sequelize);
   db.terminal = require('../models/terminal.model')(sequelize, Sequelize);
   db.operario = require('../models/operario.model')(sequelize, Sequelize);
@@ -13,6 +14,7 @@ module.exports = (db, sequelize, Sequelize) => {
   db.labor = require('../models/labor.model')(sequelize, Sequelize);
   db.evento = require('../models/evento.model')(sequelize, Sequelize);
   db.reciente = require('../models/reciente.model')(sequelize, Sequelize);
+  
 
   // Aca definimos lo importante y complicado las asociaciones en la DB
 
@@ -48,25 +50,35 @@ module.exports = (db, sequelize, Sequelize) => {
     as: 'labor'
   });
 
-  // Aca hacemos asociaciones n:m entre los terminales y las partes
-  // la ventaja es que todos los terminales recibiran un listado de codigos reducido 
-  // por medio de una tabla join terminales_partes para guardar multiples codigos de partes por terminal
+   // Una lista tiene registro de varias partes en tabla partes tendremos una fk listaId
+   db.listado.hasMany(db.parte, {
+    as: 'partes'
+  });
+  db.parte.belongsTo(db.listado, {
+    as: 'listado'
+  });
+
+  // Aca hacemos asociaciones n:m entre las maquinas y los listados de partes
+  // la ventaja es que todos las maquinas / operaciones recibiran un listado de codigos reducido 
+  // por medio de una tabla join maquinas_listados para guardar multiples codigos de partes por maquina
   // y tener una busqueda incremental más optima
 
-  db.terminal.belongsToMany(db.parte, {
-      as: 'partes',
-      through: 'terminales_partes',
+  db.maquina.belongsToMany(db.listado, {
+      as: 'listados',
+      through: 'maquinas_listados',
       timestamps: false,
       foreignKey: 'id',
-      otherKey: 'parteId'
+      otherKey: 'listadoId'
   });
-  db.parte.belongsToMany(db.terminal, {
-      as: 'terminales',
-      through: 'terminales_partes',
+  db.listado.belongsToMany(db.maquina, {
+      as: 'maquinas',
+      through: 'maquinas_listados',
       timestamps: false,
-      foreignKey: 'parteId',
+      foreignKey: 'listadoId',
       otherKey: 'id'
   });
+
+
 
   return db; // devolvemos la db con las asociaciones aplicadas
 }
