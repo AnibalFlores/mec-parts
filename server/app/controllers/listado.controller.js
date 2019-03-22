@@ -4,6 +4,9 @@ const Listado = db.listado;
 
 // Iniciar datos: Listados de partes
 exports.init = (req, res) => {
+  // esto no se llama lo dejo a modo de ejemplo
+  // se usa el init de partes en su lugar
+  
   Listado.create({
     nombre: 'MPXX'
   });
@@ -41,7 +44,7 @@ exports.init = (req, res) => {
 // Listar todos las listados de partes
 exports.findAll = (req, res) => {
   Listado.findAll({
-    attributes: ['id', 'nombre'],
+    attributes: ['id', 'nombre', 'activo'],
     where: {
       id: {
         [Op.gt]: 0 // aca ponemos el filtro
@@ -58,7 +61,7 @@ exports.findAll = (req, res) => {
 // Listar todos los listados de partes
 exports.findAllStock = (req, res) => {
   Listado.findAll({
-    attributes: ['id', 'nombre'],
+    attributes: ['id', 'nombre', 'activo'],
     order: [
       ['nombre', 'ASC']
     ]
@@ -70,7 +73,7 @@ exports.findAllStock = (req, res) => {
 // Buscar por id
 exports.findById = (req, res) => {
   Listado.findByPk(req.params.id, {
-    attributes: ['id', 'nombre']
+    attributes: ['id', 'nombre', 'activo']
   }).then(lis => res.json(lis))
 };
 
@@ -103,7 +106,8 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
   Listado.update({
-      nombre: req.body.nombre
+      nombre: req.body.nombre,
+      activo: req.body.activo
     }, {
       where: {
         id: req.params.id

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BorrarOperacionComponent } from './borrar-operacion.component';
+import { EditarListadosComponent } from './editar-listados.component';
 
-describe('BorrarOperacionComponent', () => {
-  let component: BorrarOperacionComponent;
-  let fixture: ComponentFixture<BorrarOperacionComponent>;
+describe('EditarListadosComponent', () => {
+  let component: EditarListadosComponent;
+  let fixture: ComponentFixture<EditarListadosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BorrarOperacionComponent ]
+      declarations: [ EditarListadosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BorrarOperacionComponent);
+    fixture = TestBed.createComponent(EditarListadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

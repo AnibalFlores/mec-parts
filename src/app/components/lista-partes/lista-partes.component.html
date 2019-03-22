@@ -9,9 +9,8 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Código</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Activada</th>
+        <th scope="col">Listado</th>
+       <th scope="col">Activada</th>
         <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success" [routerLink]="['/nueva-parte/']"
             routerLinkActive="router-link-active">Nueva</button></th>
       </tr>
@@ -20,8 +19,7 @@
       <tr *ngFor="let part of partes | paginate: { itemsPerPage: 10, currentPage: p }">
         <th scope="row">{{part.id}}</th>
         <td>{{part.codigo}}</td>
-        <td>{{part.nombre}}</td>
-        <td>{{part.descripcion}}</td>
+        <td>{{part.listado.nombre}}</td>
         <td>{{part.activa | activada}}</td>
         <td>
           <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-parte/'+ part.id]"

@@ -3,6 +3,8 @@ import { Maquina } from 'src/app/classes/maquina';
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Terminal } from 'src/app/classes/terminal';
 
 @Component({
   selector: 'app-editar-maquinas',
@@ -10,9 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./editar-maquinas.component.css']
 })
 export class EditarMaquinasComponent implements OnInit {
-
+  maquinaForm = new FormGroup({ terminalControl: new FormControl() });
   maquina: Maquina;
   nuevo = false;
+  terminales: Terminal[];
   titulo = '';
   enviado = false;
   admin = true;
@@ -21,6 +24,9 @@ export class EditarMaquinasComponent implements OnInit {
     private dataSrv: DataService,
     private ruta: ActivatedRoute,
     private router: Router, private authSrv: AuthService) {
+    this.dataSrv.getTerminales().subscribe((t: Terminal[]) => {
+      this.terminales = t;
+    });
   }
 
   ngOnInit() {
@@ -30,11 +36,13 @@ export class EditarMaquinasComponent implements OnInit {
       this.maquina = new Maquina();
       this.maquina.id = -1;
       this.maquina.nombre = 'Sin nombre';
+      this.maquinaForm.controls['terminalControl'].setValue(1); // pongamos terminal 1 = Sin Terminal
       this.titulo = 'Nueva Máquina';
     } else {
       this.dataSrv.getMaquina(+this.ruta.snapshot.paramMap.get('id')).subscribe(
         (m: Maquina) => {
           this.maquina = m;
+          this.maquinaForm.controls['terminalControl'].setValue(this.maquina.terminal.id);
         },
         error => console.log(error));
       this.titulo = 'Editar Máquina';
@@ -44,6 +52,8 @@ export class EditarMaquinasComponent implements OnInit {
   // segun estemos editando o agregando hacemos put o post
   confirmado() {
     this.enviado = true;
+    const i = this.maquinaForm.controls['terminalControl'].value;
+    this.maquina.terminal = this.terminales.find(t => t.id === i);
     if (this.maquina.id !== -1) {
       this.guardarMaquina(); // put o patch
     } else {

@@ -1,7 +1,8 @@
+import { Listado } from './listado';
+
 export class Parte {
     id: number;
     codigo: String;
-    nombre: String;
-    descripcion: String;
     activa: Boolean;
+    listado: Listado;
 }

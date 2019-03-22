@@ -1,10 +1,11 @@
 const db = require('../configs/db.config');
 const Terminal = db.terminal;
+const Maquina = db.maquina;
 
-// Iniciar datos: Terminales (1 - Testing)
+// Iniciar datos: Terminales (1 - Es para las maquinas sin Terminal)
 exports.init = (req, res) => {
 	Terminal.create({
-		nombre: 'Terminal de Pruebas',
+		nombre: 'Sin Terminal',
 		estado: 'Apagado'		
 	});
 
@@ -33,7 +34,13 @@ exports.findAll = (req, res) => {
 // Listar todos los terminales ordenadas por update
 exports.findAllStock = (req, res) => {
 	Terminal.findAll({
-	  attributes: ['id', 'nombre', 'estado']
+	  attributes: ['id', 'nombre', 'estado'],
+	  include: [{
+		model: Maquina,
+		attributes: ['id', 'nombre'],
+		as: 'maquinas',
+	}],
+
 	}).then(terminales => {
 	  res.json(terminales);
 	});
@@ -55,7 +62,7 @@ exports.destroy = (req, res) => {
 			}
 		}).then(response => {
 			// puse esta query porque on delete set default no esta en el ORM
-			db.sequelize.query('UPDATE articulos SET "rubroId" = 1 WHERE "rubroId" IS NULL');
+			db.sequelize.query('UPDATE maquinas SET "terminalId" = 1 WHERE "terminalId" IS NULL');
 			res.json(response)})
 	} else {
 		res.sendStatus(405);// metodo no permitido (de borrar el 1)

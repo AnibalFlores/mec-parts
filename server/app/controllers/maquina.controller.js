@@ -1,22 +1,30 @@
-const { Maquinas } = require("./maquinas");
+const { Maquinas } = require("../datos/maquinas");
+const { Terminales } = require("../datos/terminales");
 const db = require('../configs/db.config');
 const Op = db.Sequelize.Op;
+const Terminal = db.terminal;
 const Maquina = db.maquina;
 
 // Iniciar datos: Maquina (1 - Testing)
 exports.init = (req, res) => {
-  Maquina.bulkCreate(Maquinas).then(() => {
-    return Maquina.findAll();
-  }).then(maq =>
-    console.log('Maquinas creadas'));
+  Terminal.bulkCreate(Terminales).then(() => {
+    Maquina.bulkCreate(Maquinas).then(() => {
+      return Maquina.findAll();
+    }).then(maquinas => {
+      console.log('Terminales y Maquinas creadas')
+    });
+  })
 
-
-}
+};
 
 // Listar todos las maquinas excluida la de pruebas
 exports.findAll = (req, res) => {
     Maquina.findAll({
     attributes: ['id', 'nombre'],
+    include: [{
+			model: Terminal,
+			attributes: ['id', 'nombre'],
+			as: 'terminal'}],
     where: {
       id: {
         [Op.gt]: 1
@@ -32,16 +40,24 @@ exports.findAll = (req, res) => {
 exports.findAllStock = (req, res) => {
     Maquina.findAll({
       attributes: ['id', 'nombre'],
+      include: [{
+        model: Terminal,
+        attributes: ['id', 'nombre'],
+        as: 'terminal'}],
       order: [['nombre', 'ASC']]  
-    }).then(maqs => {
-      res.json(maqs);
+    }).then(maquinas => {
+      res.json(maquinas);
     });
   };
 
 // Buscar por id
 exports.findById = (req, res) => {
     Maquina.findByPk(req.params.id, {
-    attributes: ['id', 'nombre']
+    attributes: ['id', 'nombre'],
+    include: [{
+			model: Terminal,
+			attributes: ['id', 'nombre'],
+			as: 'terminal'}],
   }).then(rub => res.json(rub))
 };
 
@@ -63,7 +79,8 @@ exports.destroy = (req, res) => {
 // Maquina nueva
 exports.create = (req, res) => {
     Maquina.create({
-    nombre: req.body.nombre
+    nombre: req.body.nombre,
+    terminalId: req.body.terminal.id
   }).then(maq => {
     res.send(maq)
     console.log(maq.get())
@@ -74,7 +91,8 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
     Maquina.update({
-      nombre: req.body.nombre
+      nombre: req.body.nombre,
+      terminalId: req.body.terminal.id
     }, {
       where: {
         id: req.params.id

@@ -31,7 +31,6 @@ export class EditarOperarioComponent implements OnInit {
       this.operario.id = -1;
       this.operario.nombre = 'Sin nombre';
       this.operario.apellido = 'Sin apellido';
-      this.operario.pin = 1234;
       this.operario.activo = true;
       this.titulo = 'Nuevo Operario';
     } else {
@@ -77,5 +76,3 @@ export class EditarOperarioComponent implements OnInit {
   }
 
 }
-
-

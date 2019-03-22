@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             defaultValue: 'Apagado',
             validate: {
-                isIn: [['Apagado','En Espera', 'PAP', 'Mecanizando']],
+                isIn: [['Apagado','En Espera', 'PAP', 'Mecanizando', 'Deshabilitado']],
             }
         }
     }, {

@@ -1,0 +1,32 @@
+<div>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="listado">
+    <form class="center" #listadoForm="ngForm">
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputCodigo">Nombre</label>
+          <input type="text" class="form-control" name="nombre" required min="1" [(ngModel)]="listado.nombre"
+            placeholder="Código...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputActiva">Activo</label>
+          <br>
+          <ui-switch labelOn="Sí" labelOff="No" [(ngModel)]="listado.activo" name="activo"></ui-switch>
+        </div>
+      </div>
+
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!listadoForm.form.valid">Aceptar</button>
+        <button type="button" class="btn btn-primary" routerLink="/lista-listados">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+

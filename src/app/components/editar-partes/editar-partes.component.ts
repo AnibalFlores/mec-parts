@@ -3,6 +3,8 @@ import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Parte } from 'src/app/classes/parte';
+import { Listado } from 'src/app/classes/listado';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-partes',
@@ -10,10 +12,11 @@ import { Parte } from 'src/app/classes/parte';
   styleUrls: ['./editar-partes.component.css']
 })
 export class EditarPartesComponent implements OnInit {
-  // articuloForm = new FormGroup({ rubroControl: new FormControl() });
+  parteForm = new FormGroup({ listadoControl: new FormControl() });
   part: Parte;
   nuevo = false;
   titulo = '';
+  listados: Listado[];
   enviado = false;
   admin = true;
 
@@ -21,6 +24,9 @@ export class EditarPartesComponent implements OnInit {
     private dataSrv: DataService,
     private ruta: ActivatedRoute,
     private router: Router, private authSrv: AuthService) {
+    this.dataSrv.getListados().subscribe((l: Listado[]) => {
+      this.listados = l;
+    });
   }
 
   ngOnInit() {
@@ -29,20 +35,20 @@ export class EditarPartesComponent implements OnInit {
     if (this.nuevo) {
       this.part = new Parte();
       this.part.id = -1;
-      // this.part.cantidad = 0; // solo el admin puede editar la cantidad sin facturas
-      this.part.codigo = 'N01';
-      this.part.nombre = 'Sin nombre';
-      this.part.descripcion = 'Sin descripcion';
+      this.part.codigo = '';
       this.part.activa = true;
-      // this.art.rubro.id = 1;
-      // this.articuloForm.controls['rubroControl'].setValue(1); // pongamos rubro 1 = Varios
-      // console.log(this.art);
+      this.part.listado = new Listado();
+      this.part.listado.id = 1;
+      this.part.listado.nombre = 'MPXX';
+      this.parteForm.controls['listadoControl'].setValue(1); // ponemos listado 1 = MPXX
+      // console.log(this.part);
       this.titulo = 'Nueva Parte';
     } else {
       this.dataSrv.getParte(+this.ruta.snapshot.paramMap.get('id')).subscribe(
         (a: Parte) => {
           this.part = a;
-          // this.articuloForm.controls['rubroControl'].setValue(this.part.rubro.id);
+          this.parteForm.controls['listadoControl'].setValue(this.part.listado.id);
+          console.log(this.part.listado);
         },
         error => console.log(error));
       this.titulo = 'Editar Parte';
@@ -52,8 +58,8 @@ export class EditarPartesComponent implements OnInit {
   // segun estemos editando o agregando hacemos put o post
   confirmado() {
     this.enviado = true;
-    // const i = this.articuloForm.controls['rubroControl'].value;
-    // this.part.rubro = this.rubros.find(r => r.id === i);
+    const i = this.parteForm.controls['listadoControl'].value;
+    this.part.listado = this.listados.find(l => l.id === i);
     if (this.part.id !== -1) {
       this.guardarParte(); // put o patch
     } else {
@@ -84,5 +90,3 @@ export class EditarPartesComponent implements OnInit {
   }
 
 }
-
-

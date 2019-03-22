@@ -20,8 +20,8 @@ module.exports = function (app) {
     app.delete('/api/listadoborrar/:id', listados.destroy);
   
     // Inserta un listado nuevo
-    app.post('/api/listadosnuevo/', listados.create);
+    app.post('/api/listadonuevo/', listados.create);
   
     // Actualiza un listado por su id
-    app.put('/api/listadosupdate/:id', listados.update);
+    app.put('/api/listadoupdate/:id', listados.update);
   }

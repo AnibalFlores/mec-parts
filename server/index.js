@@ -33,13 +33,11 @@ const db = require('./app/configs/db.config');
 // aca importo los controllers solo para llenar la base de datos
 // apenas la promesa del sync se ejecute
 const usuarios = require('./app/controllers/usuario.controller');
-const estaciones = require('./app/controllers/estacion.controller');
-const terminales = require('./app/controllers/terminal.controller');
-const listados = require('./app/controllers/listado.controller');
+// const terminales = require('./app/controllers/terminal.controller');
+// const listados = require('./app/controllers/listado.controller');
 const partes = require('./app/controllers/parte.controller');
 const operarios = require('./app/controllers/operario.controller');
 const maquinas = require('./app/controllers/maquina.controller');
-const operaciones = require('./app/controllers/operacion.controller');
 const labores = require('./app/controllers/labor.controller');
 const eventos = require('./app/controllers/evento.controller');
 
@@ -57,11 +55,9 @@ db.sequelize.sync({
   // sin facturas y algunos articulos informáticos todos en cero unidades 
   usuarios.init();
   // listados.init();
-  estaciones.init();
-  terminales.init();
+  // terminales.init();
   operarios.init();
   maquinas.init();
-  operaciones.init();
   labores.init();
   eventos.init();
   partes.init();

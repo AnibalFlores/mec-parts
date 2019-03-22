@@ -3,28 +3,18 @@ module.exports = (db, sequelize, Sequelize) => {
 
   // importo las entidades a asociar una por una (esto tambien crea las tablas vacias)
 
-  db.estacion = require('../models/estacion.model')(sequelize, Sequelize);
   db.listado = require('../models/listado.model')(sequelize, Sequelize);
   db.parte = require('../models/parte.model')(sequelize, Sequelize);
   db.terminal = require('../models/terminal.model')(sequelize, Sequelize);
   db.operario = require('../models/operario.model')(sequelize, Sequelize);
   db.usuario = require('../models/usuario.model')(sequelize, Sequelize);
   db.maquina = require('../models/maquina.model')(sequelize, Sequelize);
-  db.operacion = require('../models/operacion.model')(sequelize, Sequelize);
   db.labor = require('../models/labor.model')(sequelize, Sequelize);
   db.evento = require('../models/evento.model')(sequelize, Sequelize);
   db.reciente = require('../models/reciente.model')(sequelize, Sequelize);
   
 
   // Aca definimos lo importante y complicado las asociaciones en la DB
-
-  // Una estacion tiene registro de varios terminales en tabla terminales tendremos una fk estacionId
-  db.estacion.hasMany(db.terminal, {
-    as: 'terminales'
-  });
-  db.terminal.belongsTo(db.estacion, {
-    as: 'estacion'
-  });
 
   // Una terminal tiene registro de varias maquinas en tabla maquinas tendremos una fk terminalId
   db.terminal.hasMany(db.maquina, {

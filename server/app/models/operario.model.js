@@ -7,13 +7,6 @@ module.exports = (sequelize, Sequelize) => {
 		apellido: {
 		  type: Sequelize.STRING
 		},
-		pin: {
-			type: Sequelize.STRING,
-			defaultValue: '1234',
-			validate: {
-				isNumeric: true
-			}
-		},
 		activo: {
 			type: Sequelize.BOOLEAN,
 			defaultValue: true

@@ -20,5 +20,5 @@ module.exports = function (app) {
     app.put('/api/operarioupdate/:id', operario.update);
 
      // Valida pin de un operario por su id
-     app.post('/api/operariologin/', operario.login);
+     // app.post('/api/operariologin/', operario.login);
 }

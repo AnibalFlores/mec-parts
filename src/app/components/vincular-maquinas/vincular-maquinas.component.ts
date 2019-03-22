@@ -42,7 +42,7 @@ export class VincularMaquinasComponent implements OnInit {
   }
 
   siguiente() {
-    // Preguntamos si hay un terminal seleccionado y al menos una máquinaa para vincular
+    // Preguntamos si hay un terminal seleccionado y al menos una máquina para vincular
     if (this.vinculoForm.controls['terminalControl'].value !== null && this.maquinas.length !== 0) {
       this.term = this.terminales.find(t => t.id === this.vinculoForm.controls['terminalControl'].value);
       this.cargarItems();
@@ -62,9 +62,7 @@ export class VincularMaquinasComponent implements OnInit {
 
   Confirmar() {
     this.enviado = true;
-    // this.factura.items = this.items;
-    // this.prov.facturas = [this.factura];
-
+    
     this.dataSrv.newTerminalMaquinas(this.term.id)
       .subscribe(
         term => {

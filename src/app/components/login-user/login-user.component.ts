@@ -33,7 +33,7 @@ export class LoginUserComponent implements OnInit {
           if (this.authSrv.redirectUrl) {
             this.router.navigate([this.authSrv.redirectUrl]);
           } else {
-            this.router.navigate(['/lista-estaciones']);
+            this.router.navigate(['/lista-terminales']);
           }
         }
 

@@ -12,16 +12,20 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DATE
     },
     aptas: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     },
     rechazos: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     },
     terminadas: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
     aterminar: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
     observacion: {
       type: Sequelize.TEXT

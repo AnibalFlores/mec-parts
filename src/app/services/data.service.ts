@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Parte } from '../classes/parte';
 import { Operario } from '../classes/operario';
 import { Maquina } from '../classes/maquina';
-import { Operacion } from '../classes/operacion';
 import { Terminal } from '../classes/terminal';
+import { Listado } from '../classes/listado';
 
 /*import { Articulo } from '../classes/articulo';
 import { Rubro } from '../classes/rubro';
@@ -55,9 +55,26 @@ export class DataService {
     return this.httpCli.post<Terminal>(baseUrl + '/api/terminalnuevo/', JSON.stringify(termid), httpOptions);
   }
 
-  // Verbos para Estaciones
-  getEstaciones() {
-    return this.httpCli.get(baseUrl + '/api/estaciones', httpOptions);
+  // Verbos para Listados
+  getListados() {
+    return this.httpCli.get(baseUrl + '/api/listados', httpOptions);
+  }
+
+  getListado(id: number): Observable<any> {
+    return this.httpCli.get(baseUrl + '/api/listado/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  putListado(listado: Listado) {
+    return this.httpCli.put<Parte>(baseUrl + '/api/listadoupdate/' + listado.id, JSON.stringify(listado), httpOptions);
+  }
+
+  newListado(listado: Listado) {
+    return this.httpCli.post<Listado>(baseUrl + '/api/listadonuevo/', JSON.stringify(listado), httpOptions);
+  }
+
+  delListado(id: number) {
+    return this.httpCli.delete(baseUrl + '/api/listadoborrar/' + id, httpOptions);
   }
 
   // Verbos para Partes
@@ -124,28 +141,6 @@ export class DataService {
 
   delMaquina(id: number) {
     return this.httpCli.delete(baseUrl + '/api/maquinaborrar/' + id, httpOptions);
-  }
-
-  // Verbos para Operaciones
-  getOperaciones() {
-    return this.httpCli.get(baseUrl + '/api/operaciones', httpOptions);
-  }
-
-  getOperacion(id: number): Observable<any> {
-    return this.httpCli.get(baseUrl + '/api/operacion/' + id, httpOptions).pipe(
-      map(this.extractData));
-  }
-
-  putOperacion(ope: Operacion) {
-    return this.httpCli.put<Operario>(baseUrl + '/api/operacionupdate/' + ope.id, JSON.stringify(ope), httpOptions);
-  }
-
-  newOperacion(maq: Operacion) {
-    return this.httpCli.post<Maquina>(baseUrl + '/api/operacionnueva/', JSON.stringify(maq), httpOptions);
-  }
-
-  delOperacion(id: number) {
-    return this.httpCli.delete(baseUrl + '/api/operacionborrar/' + id, httpOptions);
   }
 
 }

@@ -3,19 +3,26 @@
     {{ titulo }}
   </div>
   <div *ngIf="maquina">
-    <form class="center" #maquinaForm="ngForm">
+    <form class="center" #maqForm="ngForm">
 
       <div class="form-row">
         <div class="form-group col-md-2">
-          <label for="inputCodigo">Nombre</label>
+          <label for="inputNombre">Nombre</label>
           <input type="text" class="form-control" name="nombre" required min="2" [(ngModel)]="maquina.nombre"
             placeholder="Nombre...">
         </div>
       </div>
 
+      <div [formGroup]="maquinaForm" class="form-group col-md-2">
+        <label for="inputTerminal">Terminal</label>
+        <select class="form-control" name="terminal" formControlName="terminalControl">
+          <option [ngValue]="term.id" *ngFor="let term of terminales">{{ term.nombre }}</option>
+        </select>
+      </div>
       <div>
         <br>
-        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!maquinaForm.form.valid">Aceptar</button>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()"
+          [disabled]="!maqForm.form.valid">Aceptar</button>
         <button type="button" class="btn btn-primary" routerLink="/lista-maquinas">Cancelar</button>
       </div>
     </form>

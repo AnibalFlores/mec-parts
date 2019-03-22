@@ -1,12 +1,12 @@
-const { Codigos1 } = require("./codigos1");
-const { Codigos2 } = require("./codigos2");
-const { Codigos3 } = require("./codigos3");
-const { Codigos4 } = require("./codigos4");
-const { Codigos5 } = require("./codigos5");
-const { Codigos6 } = require("./codigos6");
-const { Codigos7 } = require("./codigos7");
-const { Codigos8 } = require("./codigos8");
-const { Listados } = require("./Listados");
+const { Codigos1 } = require("../datos/codigos1");
+const { Codigos2 } = require("../datos/codigos2");
+const { Codigos3 } = require("../datos/codigos3");
+const { Codigos4 } = require("../datos/codigos4");
+const { Codigos5 } = require("../datos/codigos5");
+const { Codigos6 } = require("../datos/codigos6");
+const { Codigos7 } = require("../datos/codigos7");
+const { Codigos8 } = require("../datos/codigos8");
+const { Listados } = require("../datos/listados");
 
 const db = require('../configs/db.config.js');
 const Op = db.Sequelize.Op;
@@ -64,7 +64,12 @@ exports.init = (req, res) => {
 // Listar todos las partes ordenadas por id
 exports.findAll = (req, res) => {
   Parte.findAll({
-    attributes: ['id', 'codigo', 'nombre', 'descripcion', 'activa'],
+    attributes: ['id', 'codigo', 'activa'],
+    include: [{
+			model: Listado,
+			attributes: ['id', 'nombre'],
+			as: 'listado',
+		}],
     order: [
       ['id', 'ASC']
     ]
@@ -77,7 +82,12 @@ exports.findAll = (req, res) => {
 exports.findAllCodes = (req, res) => {
   Parte.findAll({
     limit: 25, // esto es para testing en produccion seria filtrado por terminal y app nativa 
-    attributes: ['id', 'codigo'],
+    attributes: ['id', 'codigo', 'activa'],
+    include: [{
+			model: Listado,
+			attributes: ['id', 'nombre'],
+			as: 'listado',
+		}],
     order: [
       ['codigo', 'ASC']
     ]
@@ -89,7 +99,7 @@ exports.findAllCodes = (req, res) => {
 // Listar todos las partes ordenadas por update
 exports.findAllStock = (req, res) => {
   Parte.findAll({
-    attributes: ['id', 'codigo', 'nombre', 'descripcion', 'activa']
+    attributes: ['id', 'codigo', 'activa']
   }).then(articulos => {
     res.json(articulos);
   });
@@ -97,7 +107,12 @@ exports.findAllStock = (req, res) => {
 
 exports.findById = (req, res) => {
   Parte.findByPk(req.params.id, {
-    attributes: ['id', 'codigo', 'nombre', 'descripcion', 'activa']
+    attributes: ['id', 'codigo', 'activa'],
+    include: [{
+			model: Listado,
+			attributes: ['id', 'nombre'],
+			as: 'listado',
+		}]
   }).then(art => res.json(art))
 };
 
@@ -112,11 +127,10 @@ exports.destroy = (req, res) => {
 exports.create = (req, res) => {
   Parte.create({
     codigo: req.body.codigo,
-    nombre: req.body.nombre,
-    descripcion: req.body.descripcion,
+    listadoId: req.body.listado.id,
     activa: req.body.activa
   }).then(part => {
-    //part.setRubro(req.body.rubro.id)
+    // part.setListado(req.body.listadoId)
     res.send(part)
     console.log(part.get())
   })
@@ -126,8 +140,7 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   Parte.update({
       codigo: req.body.codigo,
-      nombre: req.body.nombre,
-      descripcion: req.body.descripcion,
+      listadoId: req.body.listado.id,
       activa: req.body.activa
     }, {
       where: {

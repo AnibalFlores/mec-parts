@@ -1,4 +1,4 @@
-const { Operarios } = require("./Operarios");
+const { Operarios } = require("../datos/operarios");
 const db = require('../configs/db.config');
 const Operario = db.operario;
 const Op = db.Sequelize.Op;
@@ -16,7 +16,7 @@ exports.init = (req, res) => {
 // Listar todos los Operarios ordenados por apellido y nombre
 exports.findAll = (req, res) => {
   Operario.findAll({
-    attributes: ['id', 'nombre', 'apellido', 'pin', 'activo'],
+    attributes: ['id', 'nombre', 'apellido', 'activo'],
     order: [
       ['apellido', 'ASC'],
       ['nombre', 'ASC']
@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
 // Localizar por id
 exports.findById = (req, res) => {
   Operario.findByPk(req.params.id, {
-    attributes: ['id', 'nombre', 'apellido', 'pin', 'activo']
+    attributes: ['id', 'nombre', 'apellido', 'activo']
   }).then(ope => res.json(ope))
 };
 
@@ -76,7 +76,7 @@ exports.update = (req, res) => {
 }
 
 // Valida pin
-exports.login = (req, res) => {
+/* exports.login = (req, res) => {
   Operario.findByPk(req.body.id)
     .then(ope => {
       console.log('id: ' + ope.id + ' pin: ' + ope.pin);
@@ -84,4 +84,5 @@ exports.login = (req, res) => {
       res.json(ope.pin === req.body.pin && ope.activo);
     })
 
-}
+}*/
+
