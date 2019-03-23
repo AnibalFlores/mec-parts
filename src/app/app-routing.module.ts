@@ -13,10 +13,11 @@ import { BorrarMaquinasComponent } from './components/borrar-maquinas/borrar-maq
 import { ListaTerminalesComponent } from './components/lista-terminales/lista-terminales.component';
 import { EditarTerminalComponent } from './components/editar-terminal/editar-terminal.component';
 import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-terminal.component';
-import { VincularMaquinasComponent } from './components/vincular-maquinas/vincular-maquinas.component';
 import { ListaListadosComponent } from './components/lista-listados/lista-listados.component';
 import { EditarListadosComponent } from './components/editar-listados/editar-listados.component';
 import { BorrarListadosComponent } from './components/borrar-listados/borrar-listados.component';
+import { VincularListadosComponent } from './components/vincular-listados/vincular-listados.component';
+import { ListaVinculosMaquinalistadosComponent } from './components/lista-vinculos-maquinalistados/lista-vinculos-maquinalistados.component';
 
 const routes: Routes = [
   // Ingreso
@@ -37,17 +38,19 @@ const routes: Routes = [
    { path: 'editar-listado/:id', component: EditarListadosComponent },
    { path: 'borrar-listado/:id', component: BorrarListadosComponent },
    { path: 'nuevo-listado', component: EditarListadosComponent },
+   { path: 'vincular-maquina-listado', component: VincularListadosComponent },
   // Maquinas
   { path: 'lista-maquinas', component: ListaMaquinasComponent },
   { path: 'editar-maquina/:id', component: EditarMaquinasComponent },
   { path: 'borrar-maquina/:id', component: BorrarMaquinasComponent },
   { path: 'nueva-maquina', component: EditarMaquinasComponent },
+  { path: 'lista-vinculos-maquinas-listados', component: ListaVinculosMaquinalistadosComponent },
   // Terminales
   { path: 'lista-terminales', component: ListaTerminalesComponent },
   { path: 'editar-terminal/:id', component: EditarTerminalComponent },
   { path: 'borrar-terminal/:id', component: BorrarTerminalComponent },
   { path: 'nuevo-terminal', component: EditarTerminalComponent },
-  { path: 'asociar-terminal-maquina', component: VincularMaquinasComponent },
+  
   // Default
   { path: '**', redirectTo: '/login' }
 ];

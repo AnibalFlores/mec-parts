@@ -7,7 +7,8 @@ const env = {
   // para el postgres
   database: 'Mecparts',
   usuario: 'postgres',
-  clave: 'postgres',
+  clave: 'postgres',// default
+  // clave: 'anibal71', // esta o la default postgres
   host: 'localhost',
   port: 5432,
   dialect: 'postgres',

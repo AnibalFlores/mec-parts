@@ -49,9 +49,9 @@ module.exports = (db, sequelize, Sequelize) => {
   });
 
   // Aca hacemos asociaciones n:m entre las maquinas y los listados de partes
-  // la ventaja es que todos las maquinas / operaciones recibiran un listado de codigos reducido 
-  // por medio de una tabla join maquinas_listados para guardar multiples codigos de partes por maquina
-  // y tener una busqueda incremental más optima
+  // la ventaja es que todos las maquinas / operaciones recibirán un listado de códigos reducido 
+  // por medio de una tabla join maquinas_listados para guardar multiples códigos de partes por maquina
+  // y tener una búsqueda incremental más optima
 
   db.maquina.belongsToMany(db.listado, {
       as: 'listados',

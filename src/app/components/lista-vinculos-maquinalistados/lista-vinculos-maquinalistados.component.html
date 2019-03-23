@@ -1,0 +1,37 @@
+<div>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <div>
+    <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary" [routerLink]="['/vincular-maquina-listado/']"
+      routerLinkActive="router-link-active">Volver</button>
+  </div>
+  <accordion>
+    <accordion-group *ngFor="let maq of maquinas" heading="{{maq.nombre}}" [isOpen]="isFirstOpen">
+      <p *ngFor="let lis of maq.listados"> Listado: {{ lis.nombre }} Activo: {{ lis.activo | activada }} </p>
+    </accordion-group>
+  </accordion>
+  <!--
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success" [routerLink]="['/nueva-estacion/']"
+            routerLinkActive="router-link-active">Nuevo</button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let est of estaciones">
+        <th scope="row">{{est.id}}</th>
+        <td>{{est.nombre}}</td>
+        <td>
+          <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-estacion/'+ est.id]"
+            routerLinkActive="router-link-active">Editar</button>
+          <button *ngIf="!vendedor" class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-estacion/'+ est.id]"
+            routerLinkActive="router-link-active">Borrar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>-->
+</div>

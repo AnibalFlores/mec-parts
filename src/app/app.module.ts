@@ -23,12 +23,12 @@ import { EditarMaquinasComponent } from './components/editar-maquinas/editar-maq
 import { ListaTerminalesComponent } from './components/lista-terminales/lista-terminales.component';
 import { EditarTerminalComponent } from './components/editar-terminal/editar-terminal.component';
 import { BorrarTerminalComponent } from './components/borrar-terminal/borrar-terminal.component';
-import { VincularMaquinasComponent } from './components/vincular-maquinas/vincular-maquinas.component';
-import { VincularPartesComponent } from './components/vincular-partes/vincular-partes.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ListaListadosComponent } from './components/lista-listados/lista-listados.component';
 import { EditarListadosComponent } from './components/editar-listados/editar-listados.component';
 import { BorrarListadosComponent } from './components/borrar-listados/borrar-listados.component';
+import { VincularListadosComponent } from './components/vincular-listados/vincular-listados.component';
+import { ListaVinculosMaquinalistadosComponent } from './components/lista-vinculos-maquinalistados/lista-vinculos-maquinalistados.component';
 
 @NgModule({
   declarations: [
@@ -48,11 +48,11 @@ import { BorrarListadosComponent } from './components/borrar-listados/borrar-lis
     ListaTerminalesComponent,
     EditarTerminalComponent,
     BorrarTerminalComponent,
-    VincularMaquinasComponent,
-    VincularPartesComponent,
     ListaListadosComponent,
     EditarListadosComponent,
-    BorrarListadosComponent
+    BorrarListadosComponent,
+    VincularListadosComponent,
+    ListaVinculosMaquinalistadosComponent
   ],
   imports: [
     BrowserModule,

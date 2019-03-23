@@ -24,4 +24,7 @@ module.exports = function(app) {
 
     // Actualiza una maquina por su id
     app.put('/api/maquinaupdate/:id', maquinas.update);
+
+    // Actualiza listados de una maquina
+    app.post('/api/vincularmaquinalistados/', maquinas.vinculaLista);
 }

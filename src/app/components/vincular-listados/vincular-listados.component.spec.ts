@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VincularPartesComponent } from './vincular-partes.component';
+import { VincularListadosComponent } from './vincular-listados.component';
 
-describe('VincularPartesComponent', () => {
-  let component: VincularPartesComponent;
-  let fixture: ComponentFixture<VincularPartesComponent>;
+describe('VincularListadosComponent', () => {
+  let component: VincularListadosComponent;
+  let fixture: ComponentFixture<VincularListadosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VincularPartesComponent ]
+      declarations: [ VincularListadosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VincularPartesComponent);
+    fixture = TestBed.createComponent(VincularListadosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

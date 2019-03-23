@@ -1,0 +1,60 @@
+<div>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+
+  <div *ngIf="seleccion">
+    <div>
+      <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary"
+        [routerLink]="['/lista-vinculos-maquinas-listados/']" routerLinkActive="router-link-active">Resumen
+        Actual</button>
+    </div>
+    <div [formGroup]="vinculoForm" class="form-group col-md-4">
+      <label for="inputMaquina">Máquina</label>
+      <select class="form-control" name="maquina" formControlName="maquinaControl">
+        <option [ngValue]="maq.id" *ngFor="let maq of maquinas">{{ maq.nombre }}</option>
+      </select>
+      <div><button (click)="siguiente()" class="btn btn-primary">Siguiente</button></div>
+    </div>
+
+    <div class="example-container">
+      <h4>Listados a vincular</h4>
+
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="listados" [cdkDropListConnectedTo]="[doneList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let lis of listados" cdkDrag>{{ lis.nombre}}</div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h4>Listados disponibles</h4>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="listadosDisponibles"
+        [cdkDropListConnectedTo]="[todoList]" class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let lista of listadosDisponibles" cdkDrag>{{ lista.nombre }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!seleccion">
+    <div>
+      <label>Máquina u Operación: <strong>{{ maq.nombre }}</strong></label>
+    </div>
+    <div>
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <th>Listado Vinculado</th>
+        </tr>
+        <tr *ngFor="let lis of listados; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{lis.nombre}}</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <button [disabled]="enviado" class="btn btn-primary" (click)="Confirmar()">Confirmar</button>
+      <button class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
+    </div>
+  </div>
+</div>

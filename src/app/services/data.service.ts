@@ -7,6 +7,7 @@ import { Operario } from '../classes/operario';
 import { Maquina } from '../classes/maquina';
 import { Terminal } from '../classes/terminal';
 import { Listado } from '../classes/listado';
+import { ListadosPorMaquina } from '../classes/listadospormaquina';
 
 /*import { Articulo } from '../classes/articulo';
 import { Rubro } from '../classes/rubro';
@@ -141,6 +142,11 @@ export class DataService {
 
   delMaquina(id: number) {
     return this.httpCli.delete(baseUrl + '/api/maquinaborrar/' + id, httpOptions);
+  }
+
+  newMaquinaListados(maqylistados: ListadosPorMaquina) {
+    // crea un many to many entre maquinas y listados
+    return this.httpCli.post<Maquina>(baseUrl + '/api/vincularmaquinalistados/', JSON.stringify(maqylistados), httpOptions);
   }
 
 }

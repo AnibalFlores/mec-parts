@@ -4,6 +4,7 @@ const db = require('../configs/db.config');
 const Op = db.Sequelize.Op;
 const Terminal = db.terminal;
 const Maquina = db.maquina;
+const Listado = db.listado;
 
 // Iniciar datos: Maquina (1 - Testing)
 exports.init = (req, res) => {
@@ -19,18 +20,24 @@ exports.init = (req, res) => {
 
 // Listar todos las maquinas excluida la de pruebas
 exports.findAll = (req, res) => {
-    Maquina.findAll({
+  Maquina.findAll({
     attributes: ['id', 'nombre'],
     include: [{
-			model: Terminal,
-			attributes: ['id', 'nombre'],
-			as: 'terminal'}],
+      model: Terminal,
+      attributes: ['id', 'nombre'],
+      as: 'terminal'
+    },
+    {
+      model: Listado,
+      attributes: ['id', 'nombre', 'activo'],
+      as: 'listados'
+    }],
     where: {
       id: {
         [Op.gt]: 1
       }
     },
-    order: [['nombre', 'ASC']]  
+    order: [['nombre', 'ASC']]
   }).then(maquinas => {
     res.json(maquinas);
   });
@@ -38,26 +45,46 @@ exports.findAll = (req, res) => {
 
 // Listar todos las maquinas incluida la de pruebas
 exports.findAllStock = (req, res) => {
-    Maquina.findAll({
+  Maquina.findAll({
+    attributes: ['id', 'nombre'],
+    include: [{
+      model: Terminal,
       attributes: ['id', 'nombre'],
-      include: [{
-        model: Terminal,
-        attributes: ['id', 'nombre'],
-        as: 'terminal'}],
-      order: [['nombre', 'ASC']]  
-    }).then(maquinas => {
-      res.json(maquinas);
-    });
-  };
+      as: 'terminal'
+    }],
+    order: [['nombre', 'ASC']]
+  }).then(maquinas => {
+    res.json(maquinas);
+  });
+};
+
+// Vincular maquina con sus listados por id
+exports.vinculaLista = (req, res) => {
+  Maquina.findByPk(req.body.maquina.id)
+    .then(maq => {
+      var pks = [];// array de pks para la columna listadoId
+      for (var i = 0; i < req.body.listados.length; i++) {
+        pks.push(req.body.listados[i].id); //armamos con solo los pks de los listados
+      }
+      // ojo aca es "setListados" y no "addListados" de esa manera se eliminan los vínculos previos
+      // de la join table 
+      maq.setListados(pks);
+    })
+    .then(() => {
+      // console.log('Listados de Maquina Actualizados.');
+      res.json(Maquina.findByPk(req.body.maquina.id))
+    })
+}
 
 // Buscar por id
 exports.findById = (req, res) => {
-    Maquina.findByPk(req.params.id, {
+  Maquina.findByPk(req.params.id, {
     attributes: ['id', 'nombre'],
     include: [{
-			model: Terminal,
-			attributes: ['id', 'nombre'],
-			as: 'terminal'}],
+      model: Terminal,
+      attributes: ['id', 'nombre'],
+      as: 'terminal'
+    }],
   }).then(rub => res.json(rub))
 };
 
@@ -69,7 +96,7 @@ exports.destroy = (req, res) => {
         id: req.params.id
       }
     }).then(response => {
-        res.json(response)
+      res.json(response)
     })
   } else {
     res.sendStatus(405); // metodo no permitido (de borrar el 1)
@@ -78,7 +105,7 @@ exports.destroy = (req, res) => {
 
 // Maquina nueva
 exports.create = (req, res) => {
-    Maquina.create({
+  Maquina.create({
     nombre: req.body.nombre,
     terminalId: req.body.terminal.id
   }).then(maq => {
@@ -90,10 +117,10 @@ exports.create = (req, res) => {
 
 // Actualiza por id
 exports.update = (req, res) => {
-    Maquina.update({
-      nombre: req.body.nombre,
-      terminalId: req.body.terminal.id
-    }, {
+  Maquina.update({
+    nombre: req.body.nombre,
+    terminalId: req.body.terminal.id
+  }, {
       where: {
         id: req.params.id
       }
