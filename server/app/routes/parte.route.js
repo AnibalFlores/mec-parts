@@ -21,4 +21,10 @@ module.exports = function (app) {
 
     // Actualiza una parte por su id
     app.put('/api/parteupdate/:id', parte.update);
+
+    // busca todas las partes activas de una maquina por su id
+    app.get('/api/partespormaquina/:id', parte.findAllByMachine);
+
+    // busca partes por su código
+    app.get('/api/partesporcodigo/:query', parte.findByCodigo);
 }

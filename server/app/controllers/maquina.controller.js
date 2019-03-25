@@ -1,5 +1,9 @@
-const { Maquinas } = require("../datos/maquinas");
-const { Terminales } = require("../datos/terminales");
+const {
+  Maquinas
+} = require("../datos/maquinas");
+const {
+  Terminales
+} = require("../datos/terminales");
 const db = require('../configs/db.config');
 const Op = db.Sequelize.Op;
 const Terminal = db.terminal;
@@ -21,23 +25,28 @@ exports.init = (req, res) => {
 // Listar todos las maquinas excluida la de pruebas
 exports.findAll = (req, res) => {
   Maquina.findAll({
-    attributes: ['id', 'nombre'],
-    include: [{
-      model: Terminal,
-      attributes: ['id', 'nombre'],
-      as: 'terminal'
+    attributes: {
+      exclude: ['terminalId']
     },
-    {
-      model: Listado,
-      attributes: ['id', 'nombre', 'activo'],
-      as: 'listados'
-    }],
+    include: [{
+        model: Terminal,
+        attributes: ['id', 'nombre'],
+        as: 'terminal'
+      },
+      {
+        model: Listado,
+        attributes: ['id', 'nombre', 'activo'],
+        as: 'listados'
+      }
+    ],
     where: {
       id: {
         [Op.gt]: 1
       }
     },
-    order: [['nombre', 'ASC']]
+    order: [
+      ['nombre', 'ASC']
+    ]
   }).then(maquinas => {
     res.json(maquinas);
   });
@@ -46,23 +55,45 @@ exports.findAll = (req, res) => {
 // Listar todos las maquinas incluida la de pruebas
 exports.findAllStock = (req, res) => {
   Maquina.findAll({
-    attributes: ['id', 'nombre'],
+    attributes: {
+      exclude: ['terminalId']
+    },
     include: [{
       model: Terminal,
       attributes: ['id', 'nombre'],
       as: 'terminal'
     }],
-    order: [['nombre', 'ASC']]
+    order: [
+      ['nombre', 'ASC']
+    ]
   }).then(maquinas => {
     res.json(maquinas);
   });
 };
 
+// Listar todas las maquinas activas por terminal id
+exports.findAllbyTerminal = (req, res) => {
+  Maquina.findAll({
+    attributes: {
+      exclude: ['terminalId']
+    },
+    where: {
+      terminalId: req.params.id,
+      activa: true
+    },
+    order: [
+      ['nombre', 'ASC']
+    ]
+  }).then(maquinas => {
+    res.json(maquinas);
+  });
+}
+
 // Vincular maquina con sus listados por id
 exports.vinculaLista = (req, res) => {
   Maquina.findByPk(req.body.maquina.id)
     .then(maq => {
-      var pks = [];// array de pks para la columna listadoId
+      var pks = []; // array de pks para la columna listadoId
       for (var i = 0; i < req.body.listados.length; i++) {
         pks.push(req.body.listados[i].id); //armamos con solo los pks de los listados
       }
@@ -79,7 +110,9 @@ exports.vinculaLista = (req, res) => {
 // Buscar por id
 exports.findById = (req, res) => {
   Maquina.findByPk(req.params.id, {
-    attributes: ['id', 'nombre'],
+    attributes: {
+      exclude: ['terminalId']
+    },
     include: [{
       model: Terminal,
       attributes: ['id', 'nombre'],
@@ -107,7 +140,11 @@ exports.destroy = (req, res) => {
 exports.create = (req, res) => {
   Maquina.create({
     nombre: req.body.nombre,
-    terminalId: req.body.terminal.id
+    tipo: req.body.tipo,
+    terminalId: req.body.terminal.id,
+    pap: req.body.pap,
+    aterminar: req.body.aterminar,
+    activa: req.body.activa
   }).then(maq => {
     res.send(maq)
     console.log(maq.get())
@@ -118,9 +155,13 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
   Maquina.update({
-    nombre: req.body.nombre,
-    terminalId: req.body.terminal.id
-  }, {
+      nombre: req.body.nombre,
+      tipo: req.body.tipo,
+      terminalId: req.body.terminal.id,
+      pap: req.body.pap,
+      aterminar: req.body.aterminar,
+      activa: req.body.activa
+    }, {
       where: {
         id: req.params.id
       }

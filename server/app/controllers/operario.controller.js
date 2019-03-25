@@ -1,4 +1,6 @@
-const { Operarios } = require("../datos/operarios");
+const {
+  Operarios
+} = require("../datos/operarios");
 const db = require('../configs/db.config');
 const Operario = db.operario;
 const Op = db.Sequelize.Op;
@@ -56,7 +58,7 @@ exports.create = (req, res) => {
 
 }
 
-// Actualiza por id
+// Actualizar
 exports.update = (req, res) => {
   Operario.update({
       nombre: req.body.nombre,
@@ -85,4 +87,3 @@ exports.update = (req, res) => {
     })
 
 }*/
-

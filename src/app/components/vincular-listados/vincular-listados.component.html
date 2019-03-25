@@ -12,7 +12,7 @@
     <div [formGroup]="vinculoForm" class="form-group col-md-4">
       <label for="inputMaquina">Máquina</label>
       <select class="form-control" name="maquina" formControlName="maquinaControl">
-        <option [ngValue]="maq.id" *ngFor="let maq of maquinas">{{ maq.nombre }}</option>
+        <option [ngValue]="maq.id" *ngFor="let maq of maquinas">{{ maq.id }} {{ maq.nombre }}</option>
       </select>
       <div><button (click)="siguiente()" class="btn btn-primary">Siguiente</button></div>
     </div>

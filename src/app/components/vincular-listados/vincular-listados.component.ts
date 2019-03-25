@@ -64,7 +64,8 @@ export class VincularListadosComponent implements OnInit {
     this.dataSrv.newMaquinaListados(this.listados_maquina)
       .subscribe(
         maq => {
-          alert('Registro de vínculo para listados de ' + maq.nombre + ' creado.');
+          // console.log(maq);
+          alert('Registro de vínculo para listados creado.');
           this.router.navigate(['/lista-vinculos-maquinas-listados/']);
         },
         (error: HttpErrorResponse)  => {

@@ -8,7 +8,11 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
         <th scope="col">Terminal</th>
+        <th scope="col">PAP</th>
+        <th scope="col">A Terminar</th>
+        <th scope="col">Activa</th>
         <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success" [routerLink]="['/nueva-maquina/']"
             routerLinkActive="router-link-active">Nuevo</button></th>
       </tr>
@@ -17,7 +21,11 @@
       <tr *ngFor="let maq of maquinas | paginate: { itemsPerPage: 10, currentPage: p }">
         <th scope="row">{{maq.id}}</th>
         <td>{{maq.nombre}}</td>
+        <td>{{maq.tipo}}</td>
         <td>{{maq.terminal.nombre}}</td>
+        <td>{{maq.pap | activada}}</td>
+        <td>{{maq.aterminar | activada}}</td>
+        <td>{{maq.activa | activada}}</td>
         <td>
           <button *ngIf="!vendedor" class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-maquina/'+ maq.id]"
             routerLinkActive="router-link-active">Editar</button>

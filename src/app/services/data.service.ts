@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Parte } from '../classes/parte';
 import { Operario } from '../classes/operario';
 import { Maquina } from '../classes/maquina';
 import { Terminal } from '../classes/terminal';
 import { Listado } from '../classes/listado';
 import { ListadosPorMaquina } from '../classes/listadospormaquina';
+import { PartePagina } from '../classes/partepagina';
 
-/*import { Articulo } from '../classes/articulo';
-import { Rubro } from '../classes/rubro';
-import { Proveedor } from '../classes/proveedor';
-import { Telefono } from '../classes/telefono';
-import { Cliente } from '../classes/cliente';*/
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 const baseUrl = 'http://localhost:3000';
@@ -23,6 +19,11 @@ const baseUrl = 'http://localhost:3000';
 })
 
 export class DataService {
+
+  // private parte$ = new Subject<Parte[]>();
+
+  // partes = this.parte$.asObservable();
+
   constructor(private httpCli: HttpClient) { }
 
   private extractData(res: Response) {
@@ -79,8 +80,12 @@ export class DataService {
   }
 
   // Verbos para Partes
-  getPartes() {
+  /*getPartes() {
     return this.httpCli.get(baseUrl + '/api/partes', httpOptions);
+  }*/
+  // Suscribimos un observable para poder hacer busquedas
+  getPartes() {
+    return this.httpCli.get<PartePagina>(baseUrl + '/api/partes', httpOptions); // .subscribe(p => this.parte$.next(p));
   }
 
   getParte(id: number): Observable<any> {
@@ -149,4 +154,8 @@ export class DataService {
     return this.httpCli.post<Maquina>(baseUrl + '/api/vincularmaquinalistados/', JSON.stringify(maqylistados), httpOptions);
   }
 
+  // busqueda de partes
+  searchEntries(term) {
+    return this.httpCli.get<PartePagina>(baseUrl + '/api/partesporcodigo/' + term); // .subscribe(p => this.parte$.next(p));
+  }
 }

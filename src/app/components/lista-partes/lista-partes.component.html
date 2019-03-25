@@ -1,22 +1,30 @@
 <div>
   <div>
-    <h5>{{ titulo }}</h5>
+    <h5>{{ titulo }}: {{cantidad}}</h5>
   </div>
-  <pagination-controls previousLabel="atras"
-                      nextLabel="siguiente" (pageChange)="p = $event"></pagination-controls>
+ 
+  <div>
+    <form *ngIf="buscador" name="coolForm" class="form-inline my-2 my-lg-0">
+      <input #query (keyup.enter)="buscarTermino(query.value)" class="form-control mr-sm-3" placeholder="Buscar por código...">
+    </form>
+  </div>
+  
+  <div>
+    <pagination-controls previousLabel="atras" nextLabel="siguiente" (pageChange)="p = $event"></pagination-controls>
+  </div>
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Código</th>
         <th scope="col">Listado</th>
-       <th scope="col">Activada</th>
-        <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success" [routerLink]="['/nueva-parte/']"
-            routerLinkActive="router-link-active">Nueva</button></th>
+        <th scope="col">Activada</th>
+        <th scope="col"><button *ngIf="!vendedor" class="btn btn-sm btn-outline-success"
+            [routerLink]="['/nueva-parte/']" routerLinkActive="router-link-active">Nueva</button></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let part of partes | paginate: { itemsPerPage: 10, currentPage: p }">
+      <tr *ngFor="let part of partes | paginate: { itemsPerPage: 10, currentPage: p, totalItems: cantidad }">
         <th scope="row">{{part.id}}</th>
         <td>{{part.codigo}}</td>
         <td>{{part.listado.nombre}}</td>

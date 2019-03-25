@@ -12,9 +12,10 @@ import { Terminal } from 'src/app/classes/terminal';
   styleUrls: ['./editar-maquinas.component.css']
 })
 export class EditarMaquinasComponent implements OnInit {
-  maquinaForm = new FormGroup({ terminalControl: new FormControl() });
+  maquinaForm = new FormGroup({ tipoControl: new FormControl, terminalControl: new FormControl() });
   maquina: Maquina;
   nuevo = false;
+  tipos = ['Máquina', 'Operación'];
   terminales: Terminal[];
   titulo = '';
   enviado = false;
@@ -36,12 +37,14 @@ export class EditarMaquinasComponent implements OnInit {
       this.maquina = new Maquina();
       this.maquina.id = -1;
       this.maquina.nombre = 'Sin nombre';
+      this.maquinaForm.controls['tipoControl'].setValue('Máquina'); // pongamos tipo
       this.maquinaForm.controls['terminalControl'].setValue(1); // pongamos terminal 1 = Sin Terminal
       this.titulo = 'Nueva Máquina';
     } else {
       this.dataSrv.getMaquina(+this.ruta.snapshot.paramMap.get('id')).subscribe(
         (m: Maquina) => {
           this.maquina = m;
+          this.maquinaForm.controls['tipoControl'].setValue(this.maquina.tipo);
           this.maquinaForm.controls['terminalControl'].setValue(this.maquina.terminal.id);
         },
         error => console.log(error));
@@ -54,6 +57,7 @@ export class EditarMaquinasComponent implements OnInit {
     this.enviado = true;
     const i = this.maquinaForm.controls['terminalControl'].value;
     this.maquina.terminal = this.terminales.find(t => t.id === i);
+    this.maquina.tipo = this.maquinaForm.controls['tipoControl'].value;
     if (this.maquina.id !== -1) {
       this.guardarMaquina(); // put o patch
     } else {

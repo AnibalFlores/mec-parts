@@ -12,6 +12,12 @@
             placeholder="Nombre...">
         </div>
       </div>
+      <div [formGroup]="maquinaForm" class="form-group col-md-2">
+        <label for="inputTipo">Tipo</label>
+        <select class="form-control" name="tipo" formControlName="tipoControl">
+          <option [ngValue]="tip" *ngFor="let tip of tipos">{{ tip }}</option>
+        </select>
+      </div>
 
       <div [formGroup]="maquinaForm" class="form-group col-md-2">
         <label for="inputTerminal">Terminal</label>
@@ -19,6 +25,31 @@
           <option [ngValue]="term.id" *ngFor="let term of terminales">{{ term.nombre }}</option>
         </select>
       </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputPap">PAP</label>
+          <br>
+          <ui-switch labelOn="Sí" labelOff="No" [(ngModel)]="maquina.pap" name="pap"></ui-switch>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputAterminar">A Terminar</label>
+          <br>
+          <ui-switch labelOn="Sí" labelOff="No" [(ngModel)]="maquina.aterminar" name="aterminar"></ui-switch>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputActiva">Activa</label>
+          <br>
+          <ui-switch labelOn="Sí" labelOff="No" [(ngModel)]="maquina.activa" name="activa"></ui-switch>
+        </div>
+      </div>
+
       <div>
         <br>
         <button type="submit" class="btn btn-primary" (click)="confirmado()"

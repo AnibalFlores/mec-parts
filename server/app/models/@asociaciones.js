@@ -12,6 +12,7 @@ module.exports = (db, sequelize, Sequelize) => {
   db.labor = require('../models/labor.model')(sequelize, Sequelize);
   db.evento = require('../models/evento.model')(sequelize, Sequelize);
   db.reciente = require('../models/reciente.model')(sequelize, Sequelize);
+  db.maquinalistado = require('../models/maquina-listado.model')(sequelize, Sequelize);
   
 
   // Aca definimos lo importante y complicado las asociaciones en la DB
@@ -55,20 +56,16 @@ module.exports = (db, sequelize, Sequelize) => {
 
   db.maquina.belongsToMany(db.listado, {
       as: 'listados',
-      through: 'maquinas_listados',
-      timestamps: false,
-      foreignKey: 'id',
+      through: { model: db.maquinalistado, unique: false },
+      foreignKey: 'maqId',
       otherKey: 'listadoId'
   });
   db.listado.belongsToMany(db.maquina, {
       as: 'maquinas',
-      through: 'maquinas_listados',
-      timestamps: false,
+      through: { model: db.maquinalistado, unique: false },
       foreignKey: 'listadoId',
-      otherKey: 'id'
+      otherKey: 'maqId'
   });
-
-
 
   return db; // devolvemos la db con las asociaciones aplicadas
 }

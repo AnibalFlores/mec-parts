@@ -4,9 +4,26 @@ module.exports = (sequelize, Sequelize) => {
     nombre: {
       type: Sequelize.STRING
     },
+    tipo: {
+      type: Sequelize.ENUM,
+      values: ['Máquina', 'Operación'], // terminal de pruebas
+      defaultValue: 'Máquina'
+    },
     terminalId: {
       type: Sequelize.INTEGER,
-      defaulValue: 1
+      defaultValue: 1 // terminal de pruebas
+    },
+    pap: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
+    },
+    aterminar: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
+    },
+    activa: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     }
   }, {
     tableName: 'maquinas',
