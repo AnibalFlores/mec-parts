@@ -397,10 +397,6 @@ const Codigos7 = [{
   {
     codigo: 'CR39I1-1',
     listadoId: 7
-  },
-  {
-    codigo: '',
-    listadoId: 7
   }
 ];
 exports.Codigos7 = Codigos7;

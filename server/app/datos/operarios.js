@@ -31,14 +31,14 @@ const Operarios = [{
   },
   {
     nombre: 'Alexis',
-    apellido: 'Cordoba'
+    apellido: 'Córdoba'
   },
   {
     nombre: 'Roque',
     apellido: 'Coronel'
   },
   {
-    nombre: 'Martin',
+    nombre: 'Martín',
     apellido: 'Guerrero'
   },
   {
@@ -50,7 +50,7 @@ const Operarios = [{
     apellido: 'Marangoni'
   },
   {
-    nombre: 'Gaston',
+    nombre: 'Gastón',
     apellido: 'Martinez'
   },
   {
@@ -74,7 +74,7 @@ const Operarios = [{
     apellido: 'Romero'
   },
   {
-    nombre: 'Anibal',
+    nombre: 'Aníbal',
     apellido: 'Ruiz'
   },
   {
