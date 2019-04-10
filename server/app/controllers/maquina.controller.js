@@ -71,7 +71,8 @@ exports.findAllStock = (req, res) => {
   });
 };
 
-// Listar todas las maquinas activas por terminal id
+// Lista todas las maquinas activas por terminal id
+// incluida la de prueba
 exports.findAllbyTerminal = (req, res) => {
   Maquina.findAll({
     attributes: {

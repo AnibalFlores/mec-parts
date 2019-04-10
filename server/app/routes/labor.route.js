@@ -24,4 +24,7 @@ module.exports = function(app) {
 
     // Actualiza una labor por su id
     app.put('/api/laborupdate/:id', labores.update);
+
+    // Inicializa labor desdes terminal cuando operario confirma su maquina y nombre
+    app.post('/api/terminalnuevalabor/', labores.nuevaporterminal);
 }

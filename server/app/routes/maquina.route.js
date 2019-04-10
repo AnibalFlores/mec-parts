@@ -27,4 +27,7 @@ module.exports = function(app) {
 
     // Actualiza listados de una maquina
     app.post('/api/vincularmaquinalistados/', maquinas.vinculaLista);
+
+    // Listar maquinas por terminal id
+    app.get('/api/maquinasporterminal/:id', maquinas.findAllbyTerminal);
 }

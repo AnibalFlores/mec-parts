@@ -103,8 +103,8 @@ exports.create = (req, res) => {
   Labor.create({
     nombre: req.body.nombre
   }).then(lab => {
-    res.send(lab)
-    console.log(lab.get())
+    res.send(lab);
+    console.log(lab.get());
   })
 
 }
@@ -112,7 +112,15 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
   Labor.update({
-      nombre: req.body.nombre
+      nombre: req.body.nombre,
+      operador: req.body.operador,
+      inicio: req.body.inicio,
+      final: req.body.final,
+      aptas: req.body.aptas,
+      rechazos: req.body.rechazos,
+      terminadas: req.body.terminadas,
+      observacion: req.body.observacion
+
     }, {
       where: {
         id: req.params.id
@@ -122,4 +130,17 @@ exports.update = (req, res) => {
       console.log('Labores Actualizadas: ' + count);
       res.json(Labor.findByPk(req.params.id))
     })
+}
+
+// Inicia labor nueva desde terminal recibe nombre y operario
+// (Luego se cambia el estado del terminal con un update)
+exports.nuevaporterminal = (req, res) => {
+  Labor.create({
+    nombre: req.body.nombre,
+    operador: req.body.operario,
+    operarioId: req.body.operarioId
+  }).then((lab) => {lab.get();
+    res.json(lab);
+    console.log(lab.get());
+  })
 }

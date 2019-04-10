@@ -50,7 +50,7 @@ exports.findAllStock = (req, res) => {
 exports.findById = (req, res) => {
 	Terminal.findByPk(req.params.id, {
 		attributes: ['id', 'nombre', 'estado']
-	}).then(rub => res.json(rub))
+	}).then(term => res.json(term))
 };
 
 // Borrar por id
@@ -95,4 +95,42 @@ exports.update = (req, res) => {
 			console.log('Terminales actualizados: ' + count);
 			res.json(Terminal.findByPk(req.params.id))
 		})
+}
+
+// Actualiza status por id
+exports.updatestatus = (req, res) => {
+	Terminal.update({
+		estado: req.body.estado,
+		laboractual: req.body.laboractual, 
+		operarioactual: req.body.operarioactual,
+		operarioname: req.body.operarioname,
+		maquinaactual: req.body.maquinaactual,
+		maquinaname: req.body.maquinaname,
+		parteactual: req.body.parteactual,
+		partecodigo: req.body.partecodigo,
+		nroordenactual: req.body.nroordenactual,
+		esmaquina: req.body.esmaquina,
+		espap: req.body.espap, 
+		esaterminar: req.body.esaterminar 
+		}, {
+			where: {
+				id: req.params.id
+			}
+		})
+		.then((count) => {
+			console.log('Status Terminal actualizado');
+			res.json(Terminal.findByPk(req.params.id))
+		})
+}
+
+// Server info
+exports.serverinfo = (req, res) => {
+	res.send('Mec-Parts Server Versión 1.0');
+	
+}
+
+// Busca terminal por id y envia el status
+// el status corresponde a las globales del terminal
+exports.terminalstatus = (req,res) =>{
+	Terminal.findByPk(req.params.id).then(term => res.json(term))
 }

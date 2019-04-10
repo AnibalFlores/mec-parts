@@ -4,6 +4,9 @@ module.exports = (sequelize, Sequelize) => {
     nombre: {// aca iria el nombre de la operacion no hay asociacion ya que la labor es un log
       type: Sequelize.STRING
     },
+    operador:{
+      type: Sequelize.STRING
+    },
     inicio: {// tambien este dato estaria en el timestamp pero este seria el usado por el sistema
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
@@ -20,10 +23,6 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: 0
     },
     terminadas: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
-    },
-    aterminar: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
     },

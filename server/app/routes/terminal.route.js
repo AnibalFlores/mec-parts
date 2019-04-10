@@ -24,4 +24,13 @@ module.exports = function(app) {
 
     // Actualiza una terminal por su id
     app.put('/api/terminalupdate/:id', terminales.update);
+
+    // Server Info
+    app.get('/api/serverinfo/', terminales.serverinfo);
+
+    // Terminal Status
+    app.get('/api/terminalstatus/:id', terminales.terminalstatus);
+
+    // Actualiza status de una terminal por su id
+    app.put('/api/terminalstatusupdate/:id', terminales.updatestatus);
 }
