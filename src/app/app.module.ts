@@ -29,6 +29,11 @@ import { EditarListadosComponent } from './components/editar-listados/editar-lis
 import { BorrarListadosComponent } from './components/borrar-listados/borrar-listados.component';
 import { VincularListadosComponent } from './components/vincular-listados/vincular-listados.component';
 import { ListaVinculosMaquinalistadosComponent } from './components/lista-vinculos-maquinalistados/lista-vinculos-maquinalistados.component';
+import { ListaStatusComponent } from './components/lista-status/lista-status.component';
+import { VerLaborComponent } from './components/ver-labor/ver-labor.component';
+import { ListadoLaboresComponent } from './components/listado-labores/listado-labores.component';
+import { ExportarComponent } from './components/exportar/exportar.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -52,7 +57,11 @@ import { ListaVinculosMaquinalistadosComponent } from './components/lista-vincul
     EditarListadosComponent,
     BorrarListadosComponent,
     VincularListadosComponent,
-    ListaVinculosMaquinalistadosComponent
+    ListaVinculosMaquinalistadosComponent,
+    ListaStatusComponent,
+    VerLaborComponent,
+    ListadoLaboresComponent,
+    ExportarComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +74,7 @@ import { ListaVinculosMaquinalistadosComponent } from './components/lista-vincul
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

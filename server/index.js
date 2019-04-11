@@ -58,8 +58,8 @@ db.sequelize.sync({
   // terminales.init();
   operarios.init();
   maquinas.init();
-  labores.init();
-  eventos.init();
+  // labores.init();
+  // eventos.init();
   partes.init();
   
   console.log('**** Datos iniciales generados con exito ****');

@@ -18,6 +18,10 @@ import { EditarListadosComponent } from './components/editar-listados/editar-lis
 import { BorrarListadosComponent } from './components/borrar-listados/borrar-listados.component';
 import { VincularListadosComponent } from './components/vincular-listados/vincular-listados.component';
 import { ListaVinculosMaquinalistadosComponent } from './components/lista-vinculos-maquinalistados/lista-vinculos-maquinalistados.component';
+import { ListaStatusComponent } from './components/lista-status/lista-status.component';
+import { VerLaborComponent } from './components/ver-labor/ver-labor.component';
+import { ListadoLaboresComponent } from './components/listado-labores/listado-labores.component';
+import { ExportarComponent } from './components/exportar/exportar.component';
 
 const routes: Routes = [
   // Ingreso
@@ -50,6 +54,13 @@ const routes: Routes = [
   { path: 'editar-terminal/:id', component: EditarTerminalComponent },
   { path: 'borrar-terminal/:id', component: BorrarTerminalComponent },
   { path: 'nuevo-terminal', component: EditarTerminalComponent },
+  // Status
+  { path: 'lista-status', component: ListaStatusComponent },
+  // Labores
+  { path: 'lista-labores', component: ListadoLaboresComponent },
+  { path: 'ver-labor/:id', component: VerLaborComponent },
+  // Exportar
+  { path: 'exportar', component: ExportarComponent },
   
   // Default
   { path: '**', redirectTo: '/login' }

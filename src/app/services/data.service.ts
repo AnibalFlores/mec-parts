@@ -158,4 +158,14 @@ export class DataService {
   searchEntries(term) {
     return this.httpCli.get<PartePagina>(baseUrl + '/api/partesporcodigo/' + term); // .subscribe(p => this.parte$.next(p));
   }
+
+  // Verbos para labores
+  getLabor(id: number): Observable<any> {
+    return this.httpCli.get(baseUrl + '/api/labor/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  getLabores() {
+    return this.httpCli.get(baseUrl + '/api/labores', httpOptions);
+  }
 }

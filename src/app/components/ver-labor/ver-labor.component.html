@@ -1,0 +1,24 @@
+<div>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="lab">
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label for="inputCodigo">Número: {{ lab.id }}</label>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputNombre">Nombre: {{ lab.nombre }}</label>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputNombre">Inicio: {{ lab.inicio | date: 'dd/MM/yyyy HH:mm:ss' }}</label>
+        </div>
+      </div>
+      <div>
+        <br>       
+        <button type="button" class="btn btn-primary" routerLink="/lista-status">Volver</button>
+      </div>
+    </form>
+  </div>
+</div>

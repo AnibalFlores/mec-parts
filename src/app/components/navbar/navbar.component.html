@@ -3,15 +3,15 @@
   <nav *ngIf="usuario.rol === 'A'" class="navbar fixed-top navbar-light" style="background-color: NavajoWhite;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-area-chart"></i> Mec-Parts: Admin</a>
-      <button routerLink="/lista-terminales" class="btn btn-sm btn-outline-primary" type="button">Status</button>
+      <button routerLink="/lista-status" class="btn btn-sm btn-outline-primary" type="button">Status</button>
       <button routerLink="/lista-terminales" class="btn btn-sm btn-outline-primary" type="button">Terminales</button>
       <button routerLink="/lista-maquinas" class="btn btn-sm btn-outline-primary" type="button">Maquinas y Operaciones</button>
       <button routerLink="/lista-listados" class="btn btn-sm btn-outline-primary" type="button">Listados de Partes</button>
       <button routerLink="/lista-partes" class="btn btn-sm btn-outline-primary" type="button">Partes</button>
       <button routerLink="/lista-operarios" class="btn btn-sm btn-outline-primary" type="button">Operarios</button>
       <button routerLink="/vincular-maquina-listado" class="btn btn-sm btn-outline-primary" type="button">Vincular listados</button>
-      <button routerLink="/lista-terminales" class="btn btn-sm btn-outline-primary" type="button">Partes Diarios</button>
-      <button routerLink="/lista-terminales" class="btn btn-sm btn-outline-primary" type="button">Exportar</button>
+      <button routerLink="/lista-labores" class="btn btn-sm btn-outline-primary" type="button">Partes Diarios</button>
+      <button routerLink="/exportar" class="btn btn-sm btn-outline-primary" type="button">Exportar</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
     <!-- <form class="form-inline">

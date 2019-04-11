@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   }, {
     tableName: 'eventos',
-    timestamps: true,
+    timestamps: false,
   });
 
   return Evento;

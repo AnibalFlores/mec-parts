@@ -1,0 +1,37 @@
+<div>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <pagination-controls previousLabel="atras"
+                      nextLabel="siguiente" (pageChange)="p = $event"></pagination-controls>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Máquina/Operación</th>
+        <th scope="col">Operario</th>
+        <th scope="col">Parte</th>
+        <th scope="col">Orden</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ter of terminales | paginate: { itemsPerPage: 10, currentPage: p }">
+        <th scope="row">{{ter.id}}</th>
+        <td>{{ter.nombre}}</td>
+        <td>{{ter.estado}}</td>
+        <td>{{ter.maquinaname}}</td>
+        <td>{{ter.operarioname}}</td>
+        <td>{{ter.partecodigo}}</td>
+        <td>{{ter.nroordenactual}}</td>
+        <td>
+          <button *ngIf="ter.laboractual!=0" class="btn btn-sm btn-outline-primary" [routerLink]="['/ver-labor/'+ ter.laboractual]"
+            routerLinkActive="router-link-active">Detalles</button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -22,10 +22,20 @@ exports.init = (req, res) => {
 // return res.send('Terminales Ok');
 }
 
-// Listar todos los terminales
+// Listar todos los terminales por orden alfabetico
 exports.findAll = (req, res) => {
 	Terminal.findAll({
-		attributes: ['id', 'nombre', 'estado'],
+		attributes: [
+			'id',
+			'nombre',
+			'estado',
+			'operarioname',
+			'maquinaname',
+			'partecodigo',
+			'nroordenactual',
+			'laboractual'],
+			order: [				
+			['nombre', 'ASC']]
 	}).then(terminales => {
 		res.json(terminales);
 	});

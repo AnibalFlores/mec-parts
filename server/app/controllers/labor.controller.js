@@ -9,25 +9,25 @@ exports.init = (req, res) => {
     nombre: 'Labor de Pruebas',
     operarioId: 1
   })
-  .then(lab => {
-    Evento.create({
+    .then(lab => {
+      Evento.create({
         nombre: 'Prueba'
       })
-      .then(eve =>
-        lab.addEvento(eve))
-  });
+        .then(eve =>
+          lab.addEvento(eve))
+    });
 
   Labor.create({
     nombre: 'Pintura',
     operarioId: 1
   })
-  .then(lab => {
-    Evento.create({
+    .then(lab => {
+      Evento.create({
         nombre: 'PAP'
       })
-      .then(eve =>
-        lab.addEvento(eve))
-  });
+        .then(eve =>
+          lab.addEvento(eve))
+    });
 
   /*
   Labor.create({
@@ -50,14 +50,13 @@ exports.init = (req, res) => {
 // Listar todos las labores excluida la de pruebas
 exports.findAll = (req, res) => {
   Labor.findAll({
-    attributes: ['id', 'nombre'],
     where: {
       id: {
-        [Op.gt]: 1
+        [Op.gt]: 0
       }
     },
     order: [
-      ['nombre', 'ASC']
+      ['inicio', 'DESC']
     ]
   }).then(labo => {
     res.json(labo);
@@ -78,9 +77,7 @@ exports.findAllStock = (req, res) => {
 
 // Buscar por id
 exports.findById = (req, res) => {
-  Labor.findByPk(req.params.id, {
-    attributes: ['id', 'nombre']
-  }).then(lab => res.json(lab))
+  Labor.findByPk(req.params.id).then(lab => res.json(lab))
 };
 
 // Borrar por id
@@ -112,16 +109,21 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
   Labor.update({
-      nombre: req.body.nombre,
-      operador: req.body.operador,
-      inicio: req.body.inicio,
-      final: req.body.final,
-      aptas: req.body.aptas,
-      rechazos: req.body.rechazos,
-      terminadas: req.body.terminadas,
-      observacion: req.body.observacion
+    terminalid: req.body.terminalid,
+    maqid: req.body.maqid,
+    nombre: req.body.nombre,
+    operador: req.body.operador,
+    nroorden: req.body.nroorden,
+    parteid: req.body.parteid,
+    parte: req.body.parte,
+    inicio: req.body.inicio,
+    final: req.body.final,
+    aptas: req.body.aptas,
+    rechazos: req.body.rechazos,
+    terminadas: req.body.terminadas,
+    observacion: req.body.observacion
 
-    }, {
+  }, {
       where: {
         id: req.params.id
       }
@@ -139,7 +141,8 @@ exports.nuevaporterminal = (req, res) => {
     nombre: req.body.nombre,
     operador: req.body.operario,
     operarioId: req.body.operarioId
-  }).then((lab) => {lab.get();
+  }).then((lab) => {
+    lab.get();
     res.json(lab);
     console.log(lab.get());
   })

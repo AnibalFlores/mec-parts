@@ -5,7 +5,7 @@ const sequelize = new Sequelize(env.database, env.usuario, env.clave, {
   dialect: env.dialect,
   operatorsAliases: false, // podemos poner alias propios a los operadores dejo los de fabrica
   paranoid: false, // en true no borra nada pone fecha de borrado solamente
-  logging: true, // <-- lo dejo en false para apagar la verbosidad
+  logging: false, // <-- lo dejo en false para apagar la verbosidad
   pool: {
     max: env.max,
     min: env.min,

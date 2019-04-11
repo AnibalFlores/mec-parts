@@ -1,10 +1,29 @@
 'use strict'
 module.exports = (sequelize, Sequelize) => {
   const Labor = sequelize.define('labor', {
+    terminalid: {// a los fines de facilitar reportes se incluyen ids
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
+    maqid: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
     nombre: {// aca iria el nombre de la operacion no hay asociacion ya que la labor es un log
       type: Sequelize.STRING
     },
     operador:{
+      type: Sequelize.STRING
+    },
+    nroorden: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
+    parteid: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0
+    },
+    parte:{
       type: Sequelize.STRING
     },
     inicio: {// tambien este dato estaria en el timestamp pero este seria el usado por el sistema
@@ -23,11 +42,11 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: 0
     },
     terminadas: {
-      type: Sequelize.BOOLEAN,
+      type: Sequelize.BOOLEAN,// el "a terminar" es la negacion de esto
       defaultValue: false
     },
     observacion: {
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT // en los terminales el maximo se fijo en 144
     }
   }, {
     tableName: 'labores',

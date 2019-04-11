@@ -61,7 +61,7 @@ exports.findAll = (req, res) => {
   });
 }
 
-// Listar todos las labores incluida la de pruebas
+// Listar todos los eventos 
 exports.findAllStock = (req, res) => {
   Evento.findAll({
     attributes: ['id', 'nombre'],
@@ -95,10 +95,11 @@ exports.destroy = (req, res) => {
   }
 }
 
-// Labor nueva
+// Evento nuevo
 exports.create = (req, res) => {
   Evento.create({
-    nombre: req.body.nombre
+    nombre: req.body.nombre,
+    laborId: req.body.laborid
   }).then(eve => {
     res.send(eve)
     console.log(eve.get())

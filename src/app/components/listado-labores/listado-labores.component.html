@@ -1,0 +1,42 @@
+<div>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <pagination-controls previousLabel="atras"
+                      nextLabel="siguiente" (pageChange)="p = $event"></pagination-controls>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Operador</th>
+        <th scope="col">Observacion</th>
+        <th scope="col">Orden</th>
+        <th scope="col">Parte</th>
+        <th scope="col">Inicio</th>
+        <th scope="col">Final</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Aptas</th>
+        <th scope="col">Rechazos</th>
+        <th scope="col">Terminadas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lab of labores | paginate: { itemsPerPage: 10, currentPage: p }">
+        <td>{{lab.id}}</td>
+        <td>{{lab.nombre}}</td>
+        <td>{{lab.operador}}</td>
+        <td>{{lab.observacion}}</td>
+        <td>{{lab.nroorden}}</td>
+        <td>{{lab.parte}}</td>
+        <td>{{lab.inicio | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{lab.final | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>{{lab.aptas + lab.rechazos}}</td>
+        <td>{{lab.aptas}}</td>
+        <td>{{lab.rechazos}}</td>
+        <td>{{lab.terminadas | activada}}</td>
+        
+      </tr>
+    </tbody>
+  </table>
+</div>
