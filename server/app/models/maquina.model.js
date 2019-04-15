@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
     activa: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
+    },
+    pariente:{
+      type: Sequelize.INTEGER,
+      hierarchy: true
     }
   }, {
     tableName: 'maquinas',

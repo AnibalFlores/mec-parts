@@ -47,7 +47,19 @@ module.exports = (sequelize, Sequelize) => {
     },
     observacion: {
       type: Sequelize.TEXT // en los terminales el maximo se fijo en 144
-    }
+    },
+    iniciopap:{// eliminamos entidad eventos y agregamos estos 4 datos aquí
+      type: Sequelize.DATE
+    },
+    duracionpap:{// si la duracion de pap es menor a 5 min se registra en cero
+      type: Sequelize.TIME
+    },
+    iniciomec: {
+      type: Sequelize.DATE     
+    },
+    duracionmec:{
+      type: Sequelize.TIME
+    }  
   }, {
     tableName: 'labores',
     timestamps: true,
