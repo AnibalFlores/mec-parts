@@ -1,5 +1,6 @@
 const env = require('./env.js');
-const Sequelize = require('sequelize');
+//var Sequelize = require('sequelize');
+const Sequelize = require('sequelize-hierarchy')();
 const sequelize = new Sequelize(env.database, env.usuario, env.clave, {
   host: env.host,
   dialect: env.dialect,

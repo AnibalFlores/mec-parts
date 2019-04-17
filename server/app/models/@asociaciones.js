@@ -8,15 +8,15 @@ module.exports = (db, sequelize, Sequelize) => {
   db.terminal = require('../models/terminal.model')(sequelize, Sequelize);
   db.operario = require('../models/operario.model')(sequelize, Sequelize);
   db.usuario = require('../models/usuario.model')(sequelize, Sequelize);
+  db.grupo = require('../models/grupo.model')(sequelize,Sequelize);
   db.maquina = require('../models/maquina.model')(sequelize, Sequelize);
   db.labor = require('../models/labor.model')(sequelize, Sequelize);
   db.evento = require('../models/evento.model')(sequelize, Sequelize);
-  db.reciente = require('../models/reciente.model')(sequelize, Sequelize);
   db.maquinalistado = require('../models/maquina-listado.model')(sequelize, Sequelize);
   
 
   // Aca definimos lo importante y complicado las asociaciones en la DB
-
+  db.grupo.isHierarchy();// genera tabla auxiliar y asociaciones de jerarquias para reportes
   // Una terminal tiene registro de varias maquinas en tabla maquinas tendremos una fk terminalId
   db.terminal.hasMany(db.maquina, {
     as: 'maquinas'

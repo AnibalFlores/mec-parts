@@ -25,9 +25,12 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       defaultValue: true
     },
-    pariente:{
-      type: Sequelize.INTEGER,
-      hierarchy: true
+    subgrupo:{
+      type: Sequelize.STRING,
+      parentId: {
+        type: Sequelize.INTEGER,
+        hierarchy: true
+    }
     }
   }, {
     tableName: 'maquinas',
