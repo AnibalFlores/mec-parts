@@ -1,48 +1,59 @@
 'use strict'
 module.exports = (db, sequelize, Sequelize) => {
     // Activar word warp para ver mejor
-    // Trigger para postgres que actualiza cantidades y precios de compra de
-    // los articulos por cada item de factura de compra insertado
-    // las cantidades se suman y los precios de compra se promedian (sistema PPP)
-    const compras_procedure = "CREATE OR REPLACE FUNCTION suma_cantidades() RETURNS trigger AS $$ DECLARE _cantidadviejo integer; _precioviejo numeric; _totalviejo numeric; _totalnuevo numeric; _precionuevo numeric; _cantidadnueva integer; BEGIN SELECT preciocompra, cantidad INTO _precioviejo, _cantidadviejo FROM articulos WHERE id = new.idarticulo; _totalviejo = _precioviejo * _cantidadviejo; _totalnuevo = new.preciounitario * new.cantidad; _cantidadnueva = _cantidadviejo + new.cantidad; _precionuevo = (_totalviejo + _totalnuevo) / _cantidadnueva; UPDATE articulos SET cantidad = _cantidadnueva, preciocompra = _precionuevo WHERE id = new.idarticulo; RETURN NULL; END; $$ LANGUAGE plpgsql VOLATILE;";
-    const itemcompratrigger = "CREATE TRIGGER sumacantidades AFTER INSERT OR UPDATE ON itemscompras FOR EACH ROW EXECUTE PROCEDURE suma_cantidades();";
-    // Trigger para postgres que actualiza cantidades y precios de venta de
-    // los articulos por cada item de factura de venta insertado
-    // las cantidades se restan y los precios de venta se sobrescriben
-    // puede dar negativos así el empleado de compras sabe que debe mercaderia urgente
-    const ventas_procedure = "CREATE OR REPLACE FUNCTION resta_cantidades() RETURNS trigger AS $$ DECLARE _cantidadviejo integer; _cantidadnueva integer; BEGIN SELECT cantidad INTO _cantidadviejo FROM articulos WHERE id = new.idarticulo; _cantidadnueva = _cantidadviejo - new.cantidad; UPDATE articulos SET cantidad = _cantidadnueva, precioventa = new.preciounitario WHERE id = new.idarticulo; RETURN NULL; END; $$ LANGUAGE plpgsql VOLATILE;";
-    const itemventatrigger = "CREATE TRIGGER restacantidades AFTER INSERT OR UPDATE ON itemsventas FOR EACH ROW EXECUTE PROCEDURE resta_cantidades();";
+    // Funcion auxiliar para calcular diferencia de tiempo en HH:MM:SS apartir de 2 timestamps con zona
+    // si el segundo argumento es menor que el primero da la diferencia en negativo
+    const funcion_hhmmss = "CREATE OR REPLACE FUNCTION extraer_hhmmss(timestamptz, timestamptz) RETURNS interval AS $$    WITH dife(x) AS ( SELECT CASE WHEN $2 > $1 then $2 - $1 ELSE $1 - $2 END), resultado AS ( SELECT ROUND(EXTRACT('epoch' FROM x) / 3600) AS horas, to_char(x, 'MI:SS') AS min_sec FROM dife) SELECT (CASE WHEN $2 < $1 THEN '-' ELSE '' END || to_char(format('%s:%s', horas, min_sec)::INTERVAL, 'HH24:MI:SS'))::INTERVAL FROM resultado; $$ LANGUAGE SQL STABLE;";
+
+    const calcula_tiempos_procedure = "CREATE OR REPLACE FUNCTION calcula_duraciones() RETURNS trigger AS $$ DECLARE     _idlabor integer; _inicio timestamptz; _final timestamptz; _evento RECORD; _tiempo interval; _iniciopap timestamptz; _iniciomec timestamptz; _inicioope timestamptz; _tiempopap interval; _tiempomec interval; _tiempoope interval; _cursor CURSOR (labor integer) FOR SELECT * FROM eventos WHERE \"laborId\" = labor ORDER BY inicio DESC; BEGIN     _final = new.final; IF _final IS NOT NULL THEN _idlabor = new.id; OPEN _cursor(labor:= _idlabor); FETCH _cursor INTO _evento; _inicio = _evento.inicio; SELECT extraer_hhmmss(_inicio, _final) INTO _tiempo; UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id; IF _evento.nombre = 'MEC' THEN     _iniciomec = _inicio; _tiempomec = _tiempo; END IF; IF _evento.nombre = 'OPE' THEN _inicioope = _inicio; _tiempoope = _tiempo; END IF; LOOP _final = _evento.inicio; FETCH _cursor INTO _evento; EXIT WHEN NOT FOUND; _inicio = _evento.inicio; SELECT extraer_hhmmss(_inicio, _final) INTO _tiempo; UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id; IF _evento.nombre = 'PAP' THEN _iniciopap = _inicio; _tiempopap = _tiempo; END IF; END LOOP;     CLOSE _cursor; IF _tiempomec IS NOT NULL THEN new.iniciomec = _iniciomec; new.duracionmec = _tiempomec; END IF;     IF _tiempoope IS NOT NULL THEN new.inicioope = _inicioope; new.duracionope = _tiempoope; END IF; IF _tiempopap IS NOT NULL THEN new.iniciopap = _iniciopap; new.duracionpap = _tiempopap; END IF; END IF; RETURN NEW; END; $$     LANGUAGE plpgsql VOLATILE;";
+
+    // console.log(calcula_tiempos_procedure);
+
+    const calcula_tiempos_trigger = "CREATE TRIGGER calculatiempos BEFORE INSERT OR UPDATE ON labores FOR EACH ROW EXECUTE PROCEDURE calcula_duraciones();";
+
+    const actualiza_inicio_status = "CREATE OR REPLACE FUNCTION actualiza_inicio_status() RETURNS trigger AS $$ DECLARE     _idlabor integer; _inicio timestamptz; BEGIN _idlabor = new.\"laborId\"; _inicio = new.inicio; IF _inicio IS NOT NULL THEN UPDATE terminales SET inicio = _inicio WHERE terminales.laboractual = _idlabor; END IF; RETURN NULL; END; $$     LANGUAGE plpgsql VOLATILE;";
+
+    const actualiza_inicio_trigger = "CREATE TRIGGER actualizainicio AFTER INSERT OR UPDATE ON eventos FOR EACH ROW EXECUTE PROCEDURE actualiza_inicio_status();";
 
     db.sequelize.query(
-            compras_procedure, {
-                type: sequelize.QueryTypes.RAW
-            })
+        funcion_hhmmss, {
+            type: sequelize.QueryTypes.RAW
+        })
         .then(function (results) {
-            console.log('Stored Procedure de compras hecho.')
+            console.log('Function Procedure de hhmmss hecho.')
         });
 
     db.sequelize.query(
-            itemcompratrigger, {
-                type: sequelize.QueryTypes.RAW
-            })
+        calcula_tiempos_procedure, {
+            type: sequelize.QueryTypes.RAW
+        })
         .then(function (results) {
-            console.log('Trigger de items compras hecho.')
+            console.log('Stored Procedure de calculatiempos hecho.')
         });
 
     db.sequelize.query(
-            ventas_procedure, {
-                type: sequelize.QueryTypes.RAW
-            })
+        calcula_tiempos_trigger, {
+            type: sequelize.QueryTypes.RAW
+        })
         .then(function (results) {
-            console.log('Stored Procedure de ventas hecho.')
+            console.log('Trigger de calcula tiempos hecho.')
         });
 
     db.sequelize.query(
-            itemventatrigger, {
-                type: sequelize.QueryTypes.RAW
-            })
+        actualiza_inicio_status, {
+            type: sequelize.QueryTypes.RAW
+        })
         .then(function (results) {
-            console.log('Trigger de items ventas hecho.')
+            console.log('Stored Procedure de actualizainicios hecho.')
         });
+
+    db.sequelize.query(
+        actualiza_inicio_trigger, {
+            type: sequelize.QueryTypes.RAW
+        })
+        .then(function (results) {
+            console.log('Trigger de actualiza inicios hecho.')
+        });
+
     return db;
 }

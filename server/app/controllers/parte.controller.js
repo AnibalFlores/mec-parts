@@ -201,7 +201,10 @@ exports.findAllByMachine = (req, res) => {
         }
       }],
       required: true
-    }]
+    }],
+    order: [
+      ['codigo', 'ASC']
+    ],
   }).then(partes => {
     res.json(partes);
   });

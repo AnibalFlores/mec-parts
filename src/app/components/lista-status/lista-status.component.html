@@ -14,6 +14,8 @@
         <th scope="col">Operario</th>
         <th scope="col">Parte</th>
         <th scope="col">Orden</th>
+        <th scope="col">Inicio</th>
+        <th scope="col">Tiempo</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -26,6 +28,10 @@
         <td>{{ter.operarioname}}</td>
         <td>{{ter.partecodigo}}</td>
         <td>{{ter.nroordenactual}}</td>
+        <td *ngIf="ter.estado != 'Apagado' && ter.inicio">{{ter.inicio | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td *ngIf="ter.estado == 'Apagado'"></td>
+        <td *ngIf="ter.estado != 'Apagado' && ter.inicio"> {{ duracion(ter.inicio) }} </td>
+        <td *ngIf="ter.estado == 'Apagado'"></td>
         <td>
           <button *ngIf="ter.laboractual!=0" class="btn btn-sm btn-outline-primary" [routerLink]="['/ver-labor/'+ ter.laboractual]"
             routerLinkActive="router-link-active">Detalles</button>

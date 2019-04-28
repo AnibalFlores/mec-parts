@@ -1,5 +1,6 @@
 var express = require('express');
- var app = express(); // express tradicional http
+var app = express(); // express tradicional http
+const forzar = true;// con true Forzamos la generacion de la BD y datos
 // const app = require("https-localhost") // modulo wrap de express que redirecciona a puerto 443 con certificados mkcert
 
 // var bodyParser = require('body-parser'); // <-- body parser deprecado ahora incluido en express
@@ -30,6 +31,8 @@ app.use(function (req, res, next) {
 // Definimos la Base de Datos
 const db = require('./app/configs/db.config');
 
+
+
 // aca importo los controllers solo para llenar la base de datos
 // apenas la promesa del sync se ejecute
 const usuarios = require('./app/controllers/usuario.controller');
@@ -38,31 +41,33 @@ const usuarios = require('./app/controllers/usuario.controller');
 const partes = require('./app/controllers/parte.controller');
 const operarios = require('./app/controllers/operario.controller');
 const maquinas = require('./app/controllers/maquina.controller');
-const labores = require('./app/controllers/labor.controller');
-const eventos = require('./app/controllers/evento.controller');
+// const labores = require('./app/controllers/labor.controller');
+// const eventos = require('./app/controllers/evento.controller');
 
 // el "force: true" borra todas las tablas y las crea de nuevo en cada ejecucion
 // aparte hay triggers en crudo los puse separados en @storedprocedures.js
 db.sequelize.sync({
-  force: true
+  force: forzar
 }).then(() => {
   console.log('**** Dropado todo y Resync con { force: true } ****');
-  
+
   // genero los triggers para actualizar cantidades automaticamente en la db
-  // require('./app/models/@storedprocedures')(db, db.sequelize, db.Sequelize);
+  require('./app/models/@storedprocedures')(db, db.sequelize, db.Sequelize);
 
   // aca lleno las tablas de las entidades básicas el orden es importante
   // sin facturas y algunos articulos informáticos todos en cero unidades 
-  usuarios.init();
-  // listados.init();
-  // terminales.init();
-  operarios.init();
-  maquinas.init();
-  // labores.init();
-  // eventos.init();
-  partes.init();
-  
-  console.log('**** Datos iniciales generados con exito ****');
+  if (forzar) {
+    usuarios.init();
+    // listados.init();
+    // terminales.init();
+    operarios.init();
+    maquinas.init();
+    // labores.init();
+    // eventos.init();
+    partes.init();
+
+    console.log('**** Datos iniciales generados con exito ****');
+  }
 });
 
 // cargamos todos los routes de la server app 

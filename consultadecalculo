@@ -1,0 +1,104 @@
+﻿CREATE OR REPLACE FUNCTION calcula_duraciones() RETURNS trigger AS $$
+ DECLARE
+  _idlabor integer;
+  _final timestamptz;
+  _evento RECORD;
+  _tiempo interval;
+  _cursor CURSOR (labor integer) FOR SELECT * FROM eventos WHERE "laborId" = labor ORDER BY inicio DESC;
+  BEGIN
+  SELECT final INTO _final FROM labores WHERE id = new.id;
+  IF _final IS NOT NULL THEN
+  SELECT id INTO _idlabor FROM labores WHERE id = new.id;
+  OPEN _cursor(labor:=_idlabor);
+  FETCH _cursor INTO _evento;
+  SELECT extraer_hhmmss(_evento.inicio, _final) INTO _tiempo;
+  UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id;LOOP _final = _evento.inicio;
+  FETCH _cursor INTO _evento;
+  EXIT WHEN NOT FOUND;
+  SELECT extraer_hhmmss(_evento.inicio, _final) INTO _tiempo;
+  UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id;
+  END LOOP;
+  END IF;
+  RETURN NULL;
+  END;
+  $$
+  LANGUAGE plpgsql VOLATILE;
+
+CREATE OR REPLACE FUNCTION calcula_duraciones() RETURNS trigger AS $$
+ DECLARE
+  _idlabor integer;
+  _inicio timestamptz;
+  _final timestamptz;
+  _evento RECORD;
+  _tiempo interval;
+  _iniciopap timestamptz;
+  _iniciomec timestamptz;
+  _inicioope timestamptz;
+  _tiempopap interval;
+  _tiempomec interval;
+  _tiempoope interval;
+  _cursor CURSOR (labor integer) FOR SELECT * FROM eventos WHERE "laborId" = labor ORDER BY inicio DESC;
+ BEGIN
+  _final = new.final;
+  IF _final IS NOT NULL THEN
+  _idlabor = new.id;
+  OPEN _cursor(labor:= _idlabor);
+  FETCH _cursor INTO _evento;
+  _inicio = _evento.inicio;
+  SELECT extraer_hhmmss(_inicio, _final) INTO _tiempo;
+  UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id;
+  IF _evento.nombre = 'MEC' THEN
+  _iniciomec = _inicio;
+  _tiempomec = _tiempo;
+  END IF;
+  IF _evento.nombre = 'OPE' THEN
+  _inicioope = _inicio;
+  _tiempoope = _tiempo;
+  END IF;
+  LOOP
+  _final = _evento.inicio;
+  FETCH _cursor INTO _evento;
+  EXIT WHEN NOT FOUND;
+  _inicio = _evento.inicio;
+  SELECT extraer_hhmmss(_inicio, _final) INTO _tiempo;
+  UPDATE eventos SET duracion = _tiempo WHERE eventos.id = _evento.id;
+  IF _evento.nombre = 'PAP' THEN
+  _iniciopap = _inicio;
+  _tiempopap = _tiempo;
+  END IF;
+  END LOOP;
+  CLOSE _cursor;
+  IF _tiempomec IS NOT NULL THEN
+  new.iniciomec = _iniciomec;
+  new.duracionmec = _tiempomec;
+  END IF;
+  IF _tiempoope IS NOT NULL THEN
+  new.inicioope = _inicioope;
+  new.duracionope = _tiempoope;
+  END IF;
+  IF _tiempopap IS NOT NULL THEN
+  new.iniciopap = _iniciopap;
+  new.duracionpap = _tiempopap;
+  END IF;
+  END IF;
+  RETURN NEW;
+  END;
+  $$
+  LANGUAGE plpgsql VOLATILE;
+
+ SELECT calcula_dura() 
+  
+CREATE OR REPLACE FUNCTION actualiza_inicio_status() RETURNS trigger AS $$
+ DECLARE
+  _idlabor integer;
+  _inicio timestamptz;
+ BEGIN
+  _idlabor = new.laborId;
+  _inicio = new.inicio;
+  IF _inicio IS NOT NULL THEN
+  UPDATE terminales SET inicio = _inicio WHERE terminales.laboractual = _idlabor;
+  END IF;
+  RETURN NULL;
+  END;
+  $$
+  LANGUAGE plpgsql VOLATILE;

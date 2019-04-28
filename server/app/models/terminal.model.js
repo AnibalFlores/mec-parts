@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
                 isIn: [['Apagado','En Espera', 'PAP', 'Mecanizando', 'Operando']],
             }
         },
+        inicio:{// tomamos del ultimo evento y agregamos este dato aquí para el status
+            type: Sequelize.DATE
+        },
         laboractual: {
             type: Sequelize.INTEGER,
             defaultValue: 0
@@ -57,7 +60,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, {
         tableName: 'terminales',
-        timestamps: true,
+        timestamps: false,
     });
 
     return Terminal;

@@ -29,6 +29,7 @@ exports.findAll = (req, res) => {
 			'id',
 			'nombre',
 			'estado',
+			'inicio',
 			'operarioname',
 			'maquinaname',
 			'partecodigo',
@@ -111,6 +112,7 @@ exports.update = (req, res) => {
 exports.updatestatus = (req, res) => {
 	Terminal.update({
 		estado: req.body.estado,
+		inicio: req.body.inicio,
 		laboractual: req.body.laboractual, 
 		operarioactual: req.body.operarioactual,
 		operarioname: req.body.operarioname,

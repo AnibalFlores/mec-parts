@@ -13,4 +13,10 @@ export class Labor {
     rechazos: number;
     terminadas: number;
     observacion: String;
+    iniciopap: Date;
+    duracionpap: number;
+    iniciomec: Date;
+    duracionmec: number;
+    inicioope: Date;
+    duracionope: number;
 }
