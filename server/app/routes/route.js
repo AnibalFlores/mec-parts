@@ -8,5 +8,4 @@ module.exports = function (app) {
   require('./labor.route')(app);
   require('./evento.route')(app);
   require('./terminal.route')(app);
-  require('./reciente.route')(app);
 }

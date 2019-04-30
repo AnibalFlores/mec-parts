@@ -27,14 +27,14 @@ export class ExcelService {
 
   }
 
-  getLabores() {
-    return this.httpCli.get(baseUrl + '/api/labores', httpOptions);
+  getLabores(desde: Date, hasta: Date ) {
+    return this.httpCli.get(baseUrl + '/api/rangolabores/'+ desde.toISOString()+'/'+ hasta.toISOString(), httpOptions);
   }
 
-  generarExcel() {
-    this.getLabores().subscribe((lab: Labor[]) => {
+  generarExcel(desde: Date, hasta: Date) {
+    this.getLabores(desde, hasta).subscribe((lab: Labor[]) => {
       this.labores = lab;
-      this.buildExcel();
+      this.buildExcel(desde, hasta);
     });
   }
 
@@ -67,7 +67,7 @@ export class ExcelService {
     return milisegundos * 1000;
   }
 
-  buildExcel() {
+  buildExcel(Desde: Date, Hasta: Date) {
     //Excel Title, Header, Data
     const title = 'Lista de Labores';
     const header = ["#", "Nombre", "Operador", "Orden", "Parte", "Inicio", "Final", "Cantidad", "Aptas", "Rechazos", "Terminadas", "Observaciones", "Inicio PAP", "Final PAP", "Tiempo PAP", "Inicio MEC", "Final MEC", "Tiempo MEC", "Inicio OPE", "Final OPE", "Tiempo OPE"]
@@ -109,7 +109,12 @@ export class ExcelService {
     let titleRow = worksheet.addRow([title]);
     titleRow.font = { name: 'Arial', family: 4, size: 16, bold: true }
     worksheet.addRow([]);
-    let subTitleRow = worksheet.addRow(['Fecha : ' + this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm')])
+    // Emisión: 28/04/2019 01:12 | Rango: 27/4/2019 00:00 al 27/4/2019 23:59:59 | Total de registros: 4
+    let subTitleRow = 'Emisión: ' + this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm');
+    subTitleRow += '| Rango: ' + this.datePipe.transform(Desde, 'dd/MM/yyyy HH:mm');
+    subTitleRow += ' al ' + this.datePipe.transform(Hasta, 'dd/MM/yyyy HH:mm');
+    subTitleRow += '| Total de registros: ' + this.data.length;
+    worksheet.addRow([subTitleRow]);
 
     //Fila vacia 
     worksheet.addRow([]);
@@ -214,7 +219,7 @@ export class ExcelService {
     worksheet.mergeCells('A3:U4');// funde celda fecha del reporte
 
     //Pie
-    let footerRow = worksheet.addRow(['Generado por sistema. Total de registros: ' + this.data.length]);
+    let footerRow = worksheet.addRow(['Generado por sistema.']);
     footerRow.getCell(1).fill = {
       type: 'pattern',
       pattern: 'solid',

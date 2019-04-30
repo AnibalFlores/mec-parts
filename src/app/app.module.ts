@@ -2,7 +2,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +34,7 @@ import { VerLaborComponent } from './components/ver-labor/ver-labor.component';
 import { ListadoLaboresComponent } from './components/listado-labores/listado-labores.component';
 import { ExportarComponent } from './components/exportar/exportar.component';
 import { DatePipe } from '@angular/common';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 
 @NgModule({
   declarations: [
@@ -72,9 +73,11 @@ import { DatePipe } from '@angular/common';
     UiSwitchModule,
     AccordionModule.forRoot(),
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DlDateTimeDateModule,  // <--- Determines the data type of the model
+    DlDateTimePickerModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, FormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

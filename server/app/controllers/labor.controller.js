@@ -63,10 +63,35 @@ exports.findAll = (req, res) => {
   });
 }
 
+// Listar todos las labores excluida la de pruebas
+exports.findAllrange = (req, res) => {
+  Labor.findAll({
+    where: {
+      id: {
+        [Op.gt]: 0
+      },
+      inicio: {
+        [Op.gte]: req.params.ini
+      },
+      final: {
+        [Op.lte]: req.params.fin
+      }
+    },
+    order: [
+      ['inicio', 'DESC']
+    ]
+  }).then(labo => {
+    res.json(labo);
+  });
+}
+
 // Listar todos las labores incluida la de pruebas
 exports.findAllStock = (req, res) => {
   Labor.findAll({
-    attributes: ['id', 'nombre'],
+    include: [{
+      model: Evento,
+      as: 'eventos',
+    }],
     order: [
       ['nombre', 'ASC']
     ]
@@ -77,7 +102,17 @@ exports.findAllStock = (req, res) => {
 
 // Buscar por id
 exports.findById = (req, res) => {
-  Labor.findByPk(req.params.id).then(lab => res.json(lab))
+  Labor.findByPk(req.params.id,{
+    include: [{
+      model: Evento,
+      as: 'eventos',
+    }],
+    order: [
+      ['nombre', 'ASC']
+    ]
+  }).then(labo => {
+    res.json(labo);
+  }).then(lab => res.json(lab))
 };
 
 // Borrar por id

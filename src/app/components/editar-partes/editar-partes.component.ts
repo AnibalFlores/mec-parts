@@ -48,7 +48,7 @@ export class EditarPartesComponent implements OnInit {
         (a: Parte) => {
           this.part = a;
           this.parteForm.controls['listadoControl'].setValue(this.part.listado.id);
-          console.log(this.part.listado);
+          // console.log(this.part.listado);
         },
         error => console.log(error));
       this.titulo = 'Editar Parte';

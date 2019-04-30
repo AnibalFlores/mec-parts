@@ -21,7 +21,6 @@ export class VerLaborComponent implements OnInit {
     this.dataSrv.getLabor(+this.ruta.snapshot.paramMap.get('id')).subscribe(
       (t: Labor) => {
         this.lab = t;
-        console.log(this.lab);
       },
       error => console.log(error));
     this.titulo = 'Detalles de la labor';

@@ -2,7 +2,8 @@ export class Terminal {
     id: number;
     nombre: String;
     estado: String;
-    inicio: Date;
+    iniciolabor: Date;
+    inicioevento: Date;
     operarioname: String;
     maquinaname: String;
     partecodigo: String;

@@ -10,6 +10,9 @@ module.exports = function(app) {
     // Trae todas las labores (no incluye la de prueba)
     app.get('/api/labores', labores.findAll);
 
+    // Trae todas las labores por rango (no incluye la de prueba)
+    app.get('/api/rangolabores/:ini/:fin', labores.findAllrange);
+
     // Trae todas las labores (incluye la de prueba)
     app.get('/api/todaslaslabores', labores.findAllStock);
 

@@ -24,7 +24,7 @@ export class LoginUserComponent implements OnInit {
     this.authSrv.login(this.usuario.nombre, this.usuario.clave)
       .subscribe((u: Usuario) => {
         if (u === null) {
-          console.log(u);
+          // console.log(u);
           this.error = true;
           this.enviado = false;
         } else {

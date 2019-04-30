@@ -1,3 +1,5 @@
+import { Evento } from "./evento";
+
 export class Labor {
     id: number;
     terminalid: number;
@@ -19,4 +21,5 @@ export class Labor {
     duracionmec: number;
     inicioope: Date;
     duracionope: number;
+    eventos: Evento[];
 }

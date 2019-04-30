@@ -11,12 +11,15 @@ module.exports = (sequelize, Sequelize) => {
                 isIn: [['Apagado','En Espera', 'PAP', 'Mecanizando', 'Operando']],
             }
         },
-        inicio:{// tomamos del ultimo evento y agregamos este dato aquí para el status
-            type: Sequelize.DATE
-        },
         laboractual: {
             type: Sequelize.INTEGER,
             defaultValue: 0
+        },
+        iniciolabor:{// tomamos el inicio de labor y agregamos este dato aquí para el status
+            type: Sequelize.DATE
+        },
+        inicioevento:{// tomamos el inicio del ultimo evento y agregamos este dato aquí para el status
+            type: Sequelize.DATE
         },
         operarioactual: {
             type: Sequelize.INTEGER,

@@ -9,14 +9,41 @@
           <label for="inputCodigo">Número: {{ lab.id }}</label>
         </div>
         <div class="form-group col-md-3">
-          <label for="inputNombre">Nombre: {{ lab.nombre }}</label>
+          <label for="inputNombre">Maquina / Operación: {{ lab.nombre }}</label>
         </div>
         <div class="form-group col-md-3">
           <label for="inputNombre">Inicio: {{ lab.inicio | date: 'dd/MM/yyyy HH:mm:ss' }}</label>
         </div>
       </div>
+      <div class="form-row">
+         <div class="form-group col-md-3">
+          <label for="inputNombre">Operario: {{ lab.operador }}</label>
+        </div>
+      </div>
       <div>
-        <br>       
+          <div *ngIf="lab.eventos.length == 0">
+              <label>Sin eventos {{lab.eventos}}</label>
+          </div>
+        <div *ngIf="lab.eventos.length > 0">
+          <label>Eventos</label>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Inicio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let eve of lab.eventos">
+                <td>{{eve.id}}</td>
+                <td>{{eve.nombre}}</td>
+                <td>{{eve.inicio | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br>
         <button type="button" class="btn btn-primary" routerLink="/lista-status">Volver</button>
       </div>
     </form>

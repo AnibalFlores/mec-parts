@@ -2,7 +2,8 @@ const Maquinas = [{
     nombre: 'Pruebas',
     terminalId: 1,
     pap: false,
-    aterminar: false
+    aterminar: false,
+    activa: false
   },
   {
     nombre: 'Pintura',

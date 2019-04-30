@@ -11,7 +11,7 @@ module.exports = (db, sequelize, Sequelize) => {
 
     const calcula_tiempos_trigger = "CREATE TRIGGER calculatiempos BEFORE INSERT OR UPDATE ON labores FOR EACH ROW EXECUTE PROCEDURE calcula_duraciones();";
 
-    const actualiza_inicio_status = "CREATE OR REPLACE FUNCTION actualiza_inicio_status() RETURNS trigger AS $$ DECLARE     _idlabor integer; _inicio timestamptz; BEGIN _idlabor = new.\"laborId\"; _inicio = new.inicio; IF _inicio IS NOT NULL THEN UPDATE terminales SET inicio = _inicio WHERE terminales.laboractual = _idlabor; END IF; RETURN NULL; END; $$     LANGUAGE plpgsql VOLATILE;";
+    const actualiza_inicio_status = "CREATE OR REPLACE FUNCTION actualiza_inicio_status() RETURNS trigger AS $$ DECLARE     _idlabor integer; _inicio timestamptz; BEGIN _idlabor = new.\"laborId\"; _inicio = new.inicio; IF _inicio IS NOT NULL THEN UPDATE terminales SET inicioevento = _inicio WHERE terminales.laboractual = _idlabor; END IF; RETURN NULL; END; $$     LANGUAGE plpgsql VOLATILE;";
 
     const actualiza_inicio_trigger = "CREATE TRIGGER actualizainicio AFTER INSERT OR UPDATE ON eventos FOR EACH ROW EXECUTE PROCEDURE actualiza_inicio_status();";
 

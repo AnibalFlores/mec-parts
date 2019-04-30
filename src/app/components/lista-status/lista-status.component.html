@@ -28,9 +28,9 @@
         <td>{{ter.operarioname}}</td>
         <td>{{ter.partecodigo}}</td>
         <td>{{ter.nroordenactual}}</td>
-        <td *ngIf="ter.estado != 'Apagado' && ter.inicio">{{ter.inicio | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td *ngIf="ter.estado != 'Apagado' && ter.inicioevento">{{ter.inicioevento | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
         <td *ngIf="ter.estado == 'Apagado'"></td>
-        <td *ngIf="ter.estado != 'Apagado' && ter.inicio"> {{ duracion(ter.inicio) }} </td>
+        <td *ngIf="ter.estado != 'Apagado' && ter.inicioevento"> {{ duracion(ter.inicioevento) }} </td>
         <td *ngIf="ter.estado == 'Apagado'"></td>
         <td>
           <button *ngIf="ter.laboractual!=0" class="btn btn-sm btn-outline-primary" [routerLink]="['/ver-labor/'+ ter.laboractual]"

@@ -16,32 +16,32 @@ exports.init = (req, res) => {
     Maquina.bulkCreate(Maquinas).then(() => {
       return Maquina.findAll();
     }).then(maquinas => {
-      console.log('Terminales y Maquinas creadas')
+      console.log('Terminales y Maquinas creadas');
     });
   })
 
 };
 
-// Listar todos las maquinas excluida la de pruebas
+// Listar todas las maquinas y operaciones incluida la de pruebas
 exports.findAll = (req, res) => {
   Maquina.findAll({
     attributes: {
       exclude: ['terminalId']
     },
     include: [{
-        model: Terminal,
-        attributes: ['id', 'nombre'],
-        as: 'terminal'
-      },
-      {
-        model: Listado,
-        attributes: ['id', 'nombre', 'activo'],
-        as: 'listados'
-      }
+      model: Terminal,
+      attributes: ['id', 'nombre'],
+      as: 'terminal'
+    },
+    {
+      model: Listado,
+      attributes: ['id', 'nombre', 'activo'],
+      as: 'listados'
+    }
     ],
     where: {
       id: {
-        [Op.gt]: 1
+        [Op.gt]: 0 // poniendo 1 excluimos la de pruebas
       }
     },
     order: [
@@ -156,13 +156,13 @@ exports.create = (req, res) => {
 // Actualiza por id
 exports.update = (req, res) => {
   Maquina.update({
-      nombre: req.body.nombre,
-      tipo: req.body.tipo,
-      terminalId: req.body.terminal.id,
-      pap: req.body.pap,
-      aterminar: req.body.aterminar,
-      activa: req.body.activa
-    }, {
+    nombre: req.body.nombre,
+    tipo: req.body.tipo,
+    terminalId: req.body.terminal.id,
+    pap: req.body.pap,
+    aterminar: req.body.aterminar,
+    activa: req.body.activa
+  }, {
       where: {
         id: req.params.id
       }
