@@ -22,6 +22,7 @@ import { ListaStatusComponent } from './components/lista-status/lista-status.com
 import { VerLaborComponent } from './components/ver-labor/ver-labor.component';
 import { ListadoLaboresComponent } from './components/listado-labores/listado-labores.component';
 import { ExportarComponent } from './components/exportar/exportar.component';
+import { CambiaClaveComponent } from './components/cambia-clave/cambia-clave.component';
 
 const routes: Routes = [
   // Ingreso
@@ -61,7 +62,8 @@ const routes: Routes = [
   { path: 'ver-labor/:id', component: VerLaborComponent },
   // Exportar
   { path: 'exportar', component: ExportarComponent },
-  
+  // Usuarios
+  { path: 'cambia-clave/:id', component: CambiaClaveComponent },
   // Default
   { path: '**', redirectTo: '/login' }
 ];

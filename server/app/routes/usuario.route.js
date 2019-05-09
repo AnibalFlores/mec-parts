@@ -9,8 +9,11 @@ module.exports = function (app) {
     app.get('/api/usuarios/', usuario.findAll);
 
     // Loguea tonto validando usuario y clave y devuelve rol 
-    // A = admin, C = compras , V = ventas y E = error
+    // A = admin, V = auditor
     app.post('/api/login/', usuario.login);
+
+    // Modifica la clave de acceso 
+    app.put('/api/cambio/:id', usuario.cambioclave);
 
 
 }

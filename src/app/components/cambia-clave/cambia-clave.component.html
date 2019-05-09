@@ -1,0 +1,18 @@
+<div>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="usuario">
+
+    <form [formGroup]="usuarioForm" (ngSubmit)="cambiarClave()">
+      <label>Clave Actual: <input class="form-control" type="password" formControlName="actual"></label><br />
+      <label>Nueva: <input class="form-control" type="password" formControlName="nueva"></label><br />
+      <label>Verificación: <input class="form-control" type="password" formControlName="repetir"></label><br />
+      <br />
+      <button class="btn btn-primary" type="submit" [disabled]="mensaje != 'ok' || enviado">Confirmar</button>
+    </form>    
+    <div *ngIf="error" class="alert alert-danger col-md-4" role="alert">
+        {{ mensaje }}
+      </div>
+  </div>
+</div>

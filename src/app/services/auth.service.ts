@@ -37,9 +37,7 @@ export class AuthService {
 
   isAdmin() { return this.user.rol === 'A'; }
 
-  isCompra() { return this.user.rol === 'C'; }
-
-  isVenta() { return this.user.rol === 'V'; }
+  isAudit() { return this.user.rol === 'V'; }
 
   isLogged() { return this.user.rol !== 'N'; }
 
@@ -51,6 +49,12 @@ export class AuthService {
 
   // re facil creamos un nuevo usuario (rol N) y lo mandamos a nuevologueado
   logout() { this.nuevoLogueado(new Usuario()); }
+
+  cambioClave(usuario: number, clave: String){
+    const body = { clave: clave };
+    return this.client.put(baseUrl + '/api/cambio/'+ usuario, body, httpOptions);
+
+  }
 
 }
 

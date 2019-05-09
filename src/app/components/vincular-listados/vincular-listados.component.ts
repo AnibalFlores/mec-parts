@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class VincularListadosComponent implements OnInit {
   vinculoForm = new FormGroup({ maquinaControl: new FormControl() });
-  titulo = 'Asociar Máquinas a un Terminal';
+  titulo = 'Asociar una máquina u operación a un listado de códigos';
   listados_maquina = new ListadosPorMaquina();
   maquinas: Maquina[] = [];
   listados: Listado[] = [];

@@ -39,7 +39,7 @@ export class EditarMaquinasComponent implements OnInit {
       this.maquina.nombre = 'Sin nombre';
       this.maquinaForm.controls['tipoControl'].setValue('Máquina'); // pongamos tipo
       this.maquinaForm.controls['terminalControl'].setValue(1); // pongamos terminal 1 = Sin Terminal
-      this.titulo = 'Nueva Máquina';
+      this.titulo = 'Nueva Máquina u Operación';
     } else {
       this.dataSrv.getMaquina(+this.ruta.snapshot.paramMap.get('id')).subscribe(
         (m: Maquina) => {
@@ -48,7 +48,7 @@ export class EditarMaquinasComponent implements OnInit {
           this.maquinaForm.controls['terminalControl'].setValue(this.maquina.terminal.id);
         },
         error => console.log(error));
-      this.titulo = 'Editar Máquina';
+      this.titulo = 'Editar Máquina u Operación';
     }
   }
 

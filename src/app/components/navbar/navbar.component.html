@@ -2,7 +2,7 @@
 <div class="fixed-top" *ngIf="usuario">
   <nav *ngIf="usuario.rol === 'A'" class="navbar fixed-top navbar-light" style="background-color: NavajoWhite;">
     <form class="form-inline">
-      <a class="navbar-brand" href="#"><i class="fa fa-area-chart"></i> Mec-Parts: Admin</a>
+      <a class="navbar-brand" routerLink="/cambia-clave/admin"><i class="fa fa-area-chart"></i> Mec-Parts: Admin</a>
       <button routerLink="/lista-status" class="btn btn-sm btn-outline-primary" type="button">Status</button>
       <button routerLink="/lista-terminales" class="btn btn-sm btn-outline-primary" type="button">Terminales</button>
       <button routerLink="/lista-maquinas" class="btn btn-sm btn-outline-primary" type="button">Maquinas y Operaciones</button>
@@ -14,40 +14,16 @@
       <button routerLink="/exportar" class="btn btn-sm btn-outline-primary" type="button">Exportar</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
-    <!-- <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-    <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>  -->
-  </nav>
-
-  <nav *ngIf="usuario.rol === 'C'" class="navbar fixed-top navbar-light" style="background-color: NavajoWhite;">
-    <form class="form-inline">
-      <a class="navbar-brand" href="#"><i class="fa fa-area-chart"></i> Mec-Parts: Cargas</a>
-      <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>
-      <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
-      <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
-      <button routerLink="/compras" class="btn btn-sm btn-outline-primary" type="button">Compras</button>
-      <button routerLink="/listafacturacompra" class="btn btn-sm btn-outline-primary" type="button">Lista Compras</button>
-      <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
-     </form>
-    <!-- <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-    <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>  -->
   </nav>
 
   <nav *ngIf="usuario.rol === 'V'" class="navbar fixed-top navbar-light" style="background-color: NavajoWhite;">
     <form class="form-inline">
-      <a class="navbar-brand" href="#"><i class="fa fa-area-chart"></i> Mec-Parts: Auditor</a>
-      <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
-      <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
-      <button routerLink="/ventas" class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
-      <button routerLink="/listafacturaventa" class="btn btn-sm btn-outline-primary" type="button">Lista Ventas</button>
+      <a class="navbar-brand" routerLink="/cambia-clave/admin"><i class="fa fa-area-chart"></i> Mec-Parts: Auditor</a>
+      <button routerLink="/lista-status" class="btn btn-sm btn-outline-primary" type="button">Status</button>
+      <button routerLink="/lista-labores" class="btn btn-sm btn-outline-primary" type="button">Partes Diarios</button>
+      <button routerLink="/exportar" class="btn btn-sm btn-outline-primary" type="button">Exportar</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
-    <!-- <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
-    <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>  -->
   </nav>
+
 </div>

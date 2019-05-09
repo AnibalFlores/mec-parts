@@ -35,6 +35,7 @@ import { ListadoLaboresComponent } from './components/listado-labores/listado-la
 import { ExportarComponent } from './components/exportar/exportar.component';
 import { DatePipe } from '@angular/common';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import { CambiaClaveComponent } from './components/cambia-clave/cambia-clave.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
     ListaStatusComponent,
     VerLaborComponent,
     ListadoLaboresComponent,
-    ExportarComponent
+    ExportarComponent,
+    CambiaClaveComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,7 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
     AccordionModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
-    DlDateTimeDateModule,  // <--- Determines the data type of the model
+    DlDateTimeDateModule,  
     DlDateTimePickerModule
   ],
   providers: [DatePipe, FormsModule],

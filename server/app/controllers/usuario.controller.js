@@ -9,16 +9,10 @@ exports.init = (req, res) => {
 		clave: 'admin',
 		rol: 'A'
 	});
-	
-    Usuario.create({
-		usuario: 'compra',
-		clave: 'compra',
-		rol: 'C'
-	});
-    
-    Usuario.create({
-		usuario: 'vende',
-		clave: 'vende',
+ 
+  Usuario.create({
+		usuario: 'audit',
+		clave: 'audit',
 		rol: 'V'
 	});
 	
@@ -51,3 +45,18 @@ exports.login = (req, res) => {
 	});
 
 };
+
+// Cambia clave
+exports.cambioclave = (req, res) => {
+	Usuario.update({
+		clave: req.body.clave
+		}, {
+			where: {
+				id: req.params.id
+			}
+		})
+		.then((count) => {
+			console.log('Clave usuario actualizada: ' + count);
+			res.json(Usuario.findByPk(req.params.id))
+		})
+}

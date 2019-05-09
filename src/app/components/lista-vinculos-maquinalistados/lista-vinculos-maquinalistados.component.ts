@@ -12,7 +12,7 @@ export class ListaVinculosMaquinalistadosComponent implements OnInit {
 
   maquinas: Maquina[];
   titulo = 'Resumen Máquinas y Listados de partes';
-  vendedor = false;
+  auditor = false;
   isFirstOpen = true;
 
   constructor(private authSrv: AuthService, private dataSrv: DataService) { }
@@ -21,7 +21,7 @@ export class ListaVinculosMaquinalistadosComponent implements OnInit {
     this.dataSrv.getMaquinas().subscribe((m: Maquina[]) => {
       this.maquinas = m;
     });
-    this.vendedor = this.authSrv.isVenta();
+    this.auditor = this.authSrv.isAudit();
   }
 
 }

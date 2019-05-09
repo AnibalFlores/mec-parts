@@ -30,7 +30,7 @@ export class EditarTerminalComponent implements OnInit {
       this.terminal = new Terminal();
       this.terminal.id = -1;
       this.terminal.nombre = 'Sin nombre';
-      this.titulo = 'Nueva Máquina';
+      this.titulo = 'Nuevo Terminal';
     } else {
       this.dataSrv.getTerminal(+this.ruta.snapshot.paramMap.get('id')).subscribe(
         (t: Terminal) => {

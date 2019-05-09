@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class ListaMaquinasComponent implements OnInit {
   maquinas: Maquina[];
-  titulo = 'Maquinas';
+  titulo = 'Máquinas y Operaciones';
 
   constructor(private authSrv: AuthService, private dataSrv: DataService) { }
 
